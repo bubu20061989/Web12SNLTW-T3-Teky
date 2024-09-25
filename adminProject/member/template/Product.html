@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Product</h1>
+        <div class="form-container" >
+            <form method="post" id="main-form">
+                {% csrf_token %}
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.product_id.id_for_label }}">Product ID</label>
+                        {{ form.product_id }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.value.id_for_label }}">Value</label>
+                        {{ form.value }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.type.id_for_label }}">Type</label>
+                        {{ form.type }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.amount.id_for_label }}">Amount</label>
+                        {{ form.amount }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Status</label>
+                        {{ form.status }}
+                    </div>
+                </div>
+                <button type="submit">Save</button>
+                <button type="button" id="update-button">Update</button>
+                <button type="button" id="delete-button">Delete</button>
+            </form>
+        </div>
+
+        <div class="grid-container">
+            <h2>Employee List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Value</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Product in Products %}
+                    <tr>
+                        <td>{{ Product.product_id }}</td>
+                        <td>{{ Product.value }}</td>
+                        <td>{{ Product.type }}</td>
+                        <td>{{ Product.amount }}</td>
+                        <td>{{ Product.status }}</td>
+
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12">No products found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'js/product.js' %}"></script>
+</body>
+</html>

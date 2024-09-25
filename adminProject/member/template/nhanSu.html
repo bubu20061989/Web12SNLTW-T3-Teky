@@ -1,0 +1,141 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Management</h1>
+        
+        <div class="form-container">
+            <h2>Employee Form</h2>
+            <form method="post" id="main-form">
+                {% csrf_token %}
+                
+                <!-- Group two rows together in one line -->
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="id_employee_id">Employee ID:</label>
+                        {{ form.employee_id }}
+                    </div>
+                    <div class="form-row">
+                        <label for="id_name">Name:</label>
+                        {{ form.name }}
+                    </div>
+                </div>
+        
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="id_dob">Date of Birth:</label>
+                        {{ form.dob }}
+                    </div>
+                    <div class="form-row">
+                        <label for="id_phone">Phone:</label>
+                        {{ form.phone }}
+                    </div>
+                </div>
+        
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="id_address">Address:</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="form-row">
+                        <label for="id_email">Email:</label>
+                        {{ form.email }}
+                    </div>
+                </div>
+        
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="id_department">Department:</label>
+                        {{ form.department }}
+                    </div>
+                    <div class="form-row">
+                        <label for="id_position">Position:</label>
+                        {{ form.position }}
+                    </div>
+                </div>
+        
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="id_hire_date">Hire Date:</label>
+                        {{ form.hire_date }}
+                    </div>
+                    <div class="form-row">
+                        <label for="id_salary">Salary:</label>
+                        {{ form.salary }}
+                    </div>
+                </div>
+        
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="id_status">Status:</label>
+                        {{ form.status }}
+                    </div>
+                    <div class="form-row">
+                        <label for="id_notes">Notes:</label>
+                        {{ form.notes }}
+                    </div>
+                </div>
+        
+                <button type="submit" id="add-button">Add Employee</button>
+                <button type="button" id="update-button">Update Employee</button>
+                <button type="button" id="delete-button">Delete Employee</button>
+            </form>
+        </div>
+        
+
+        <div class="grid-container">
+            <h2>Employee List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Hire Date</th>
+                        <th>Salary</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.employee_id }}</td>
+                        <td>{{ employee.name }}</td>
+                        <td>{{ employee.dob }}</td>
+                        <td>{{ employee.phone }}</td>
+                        <td>{{ employee.address }}</td>
+                        <td>{{ employee.email }}</td>
+                        <td>{{ employee.department }}</td>
+                        <td>{{ employee.position }}</td>
+                        <td>{{ employee.hire_date }}</td>
+                        <td>{{ employee.salary }}</td>
+                        <td>{{ employee.status }}</td>
+                        <td>{{ employee.notes }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12">No employees found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
