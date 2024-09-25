@@ -33,9 +33,20 @@ class Product(models.Model):
         ('expired', 'Expired'),
     ]
     
+    TYPE_CHOICES = [
+        ('aoThun', 'Áo Thun'),
+        ('aoSoMi', 'Áo Sơ Mi'),
+        ('aoKhoac', 'Áo Khoác'),
+        ('aoPolo', 'Áo Polo'),
+    ]
+    
     product_id = models.CharField(max_length=100, unique=True)
     value = models.DecimalField(max_digits=10, decimal_places=2)
-    type = models.CharField(max_length=100)
+    type = models.CharField(
+        max_length=20,
+        choices=TYPE_CHOICES,
+        default='',
+    )
     amount = models.PositiveIntegerField()
     status = models.CharField(
         max_length=20,

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa Hàng Trực Tuyến</title>
+    <link rel="stylesheet" href="../static/css/Shop.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    
+   
+    <header>
+        <div class="container">
+            <h1 class="logo">Cửa Hàng</h1>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+                <button class="btn-search" onclick="searchProduct()">Tìm kiếm</button>
+            </div>
+            <div class="header-buttons">
+                <button class="btn-login" onclick="showLogin()">Đăng nhập</button>
+                <button class="btn-cart" onclick="showCart()">Giỏ hàng (<span id="cart-count">0</span>)</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="product-container" id="productContainer">
+            {% for Product in Products %}
+            <div class="product">
+                <img src="https://via.placeholder.com/150">
+                <h3>{{ Product.product_id }}</h3>
+                <p>Giá: {{ Product.value }} VND</p>
+                <button onclick="addToCart(Product.product_id)">Thêm vào giỏ</button>
+            </div>
+            {% empty %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal giỏ hàng -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <h2>Giỏ hàng của bạn</h2>
+            <ul id="cartItems"></ul>
+            <button class="btn-close" onclick="hideCart()">Đóng</button>
+        </div>
+    </div>
+
+    <!-- Modal đăng nhập -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h2>Đăng nhập</h2>
+            <input type="text" id="username" placeholder="Tên đăng nhập">
+            <input type="password" id="password" placeholder="Mật khẩu">
+            <button class="btn-submit" onclick="login()">Đăng nhập</button>
+            <button class="btn-close" onclick="hideLogin()">Đóng</button>
+        </div>
+    </div>
+
+    <script src="../static/js/Shop.js"></script>
+</body>
+
+</html>

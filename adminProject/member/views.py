@@ -83,3 +83,10 @@ def deleteProduct(request, product_id):
     
     return render(request, 'product.html', {'Products': product})
 
+def loadShopProduct(request):
+    print('Load Shop Product')
+    #check product ow trang thai nao
+    product = Product.objects.all()
+    print(product)
+    return render(request, 'Shop.html', {'Products': product})
+
