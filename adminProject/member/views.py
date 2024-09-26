@@ -90,3 +90,5 @@ def loadShopProduct(request):
     print(product)
     return render(request, 'Shop.html', {'Products': product})
 
+def loadLogin(request):
+    return render(request, 'login.html')
