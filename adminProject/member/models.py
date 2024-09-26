@@ -3,15 +3,13 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
-    employee_id = models.CharField(max_length=10, unique=True, null=True, blank=True)
-    
+    employee_id = models.CharField(max_length=10, unique=True, null=True, blank=True) 
     # Thêm trường role để phân quyền
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('manager', 'Manager'),
         ('staff', 'Nhân viên'),
     ]
-    
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
 
     def __str__(self):

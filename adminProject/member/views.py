@@ -7,10 +7,9 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 
-
-
-
 def loadNhanSu(request):
+    if request.user.role != 'admin' and request.user.role != 'manager':
+        return render(request, 'error.html')
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
         if form.is_valid():
@@ -46,6 +45,8 @@ def deleteNhanSu(request, employee_id):
 
 
 def loadProduct(request):
+    if request.user.role != 'admin' and request.user.role != 'manager':
+        return render(request, 'error.html')
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
@@ -94,8 +95,11 @@ def loadLogin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('nhanSu')  # Redirect to the 'nhanSu' page after login
+            return redirect('product')  # Redirect to the 'nhanSu' page after login
 
         else:
             messages.error(request, 'Tên đăng nhập hoặc mật khẩu không chính xác.')
     return render(request, 'login.html')
+
+def loadError(request):
+    return render(request, 'error.html')
