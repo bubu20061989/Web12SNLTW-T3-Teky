@@ -94,7 +94,8 @@ def loadLogin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.error(request, 'login tc.')
+            return redirect('nhanSu')  # Redirect to the 'nhanSu' page after login
+
         else:
             messages.error(request, 'Tên đăng nhập hoặc mật khẩu không chính xác.')
     return render(request, 'login.html')
