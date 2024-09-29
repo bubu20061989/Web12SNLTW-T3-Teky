@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Xuất Thành Công</title>
+    <!-- Link tới Google Fonts để sử dụng font chữ đẹp -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Link tới Font Awesome để sử dụng biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Link tới file CSS -->
+    <link rel="stylesheet" href="../static/css/logout.css">
+</head>
+
+<body>
+    <div class="logout-container">
+        <div class="icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <h2>Đăng Xuất Thành Công</h2>
+        <p>Bạn đã đăng xuất khỏi tài khoản của mình.</p>
+        <a href="{% url 'login' %}" class="btn">Đăng Nhập Lại</a>
+    </div>
+</body>
+
+</html>

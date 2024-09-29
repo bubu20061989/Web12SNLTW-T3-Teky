@@ -72,7 +72,6 @@ def updateProduct(request, product_id):
     return render(request, 'Products.html', {'form': form})
 
 
-
 def deleteProduct(request, product_id):
     print('Delete Product')
     product = get_object_or_404(Product, product_id=product_id)  # Kiểm tra nhân viên có tồn tại không
@@ -103,3 +102,9 @@ def loadLogin(request):
 
 def loadError(request):
     return render(request, 'error.html')
+
+def loadDangKi(request):
+    return render(request, 'dangKi.html')
+
+def loadLogout(request):
+    return render(request, 'logout.html')

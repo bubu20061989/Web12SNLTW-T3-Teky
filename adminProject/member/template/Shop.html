@@ -20,7 +20,7 @@
                 <button class="btn-search" onclick="searchProduct()">Tìm kiếm</button>
             </div>
             <div class="header-buttons">
-                <button class="btn-login" onclick="showLogin()">Đăng nhập</button>
+                <a class="btn-login" href="{% url 'login' %}">Đăng nhập</a>
                 <button class="btn-cart" onclick="showCart()">Giỏ hàng (<span id="cart-count">0</span>)</button>
             </div>
         </div>

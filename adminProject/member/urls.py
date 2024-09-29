@@ -6,9 +6,10 @@ from member import views
 urlpatterns = [
     path('nhanSu', views.loadNhanSu, name='nhanSu'),
     path('product', views.loadProduct, name='product'),
-    path('shop', views.loadShopProduct, name='shop'),
-    path('', views.loadLogin, name='login'),
-    # path('logout', views.logoutUser, name='logout'),
+    path('', views.loadShopProduct, name='shop'),
+    path('login', views.loadLogin, name='login'),
+    path('dangKi', views.loadDangKi, name='dangKi'),
+    path('logout', views.loadLogout, name='logout'),
     # path('home', views.loadHome, name='home'),
     path('error', views.loadError, name='error'),
     path('employee/update/<str:employee_id>/', views.updateNhanSu, name='update_employee'),
