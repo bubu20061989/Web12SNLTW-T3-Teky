@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
         ('admin', 'Admin'),
         ('manager', 'Manager'),
         ('staff', 'Nhân viên'),
+        ('customer', 'Khách hàng'),
     ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='staff')
 

@@ -7,11 +7,238 @@
     <title>Cửa Hàng Trực Tuyến</title>
     <link rel="stylesheet" href="../static/css/Shop.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Fonts & Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f1f3f4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #24292e;
+            color: white;
+            padding: 20px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        .search-bar .btn-search {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* Header Buttons */
+        .header-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-buttons a,
+        .header-buttons button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+        .header-buttons .btn-cart {
+            background-color: #007bff;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #ff6600;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #e65c00;
+        }
+
+        /* Product Container */
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .product p {
+            color: #007bff;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .product button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            max-width: 100%;
+        }
+
+        .btn-close,
+        .btn-submit {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .btn-close:hover,
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            header .container {
+                flex-direction: column;
+            }
+
+            .search-bar {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    
-   
     <header>
         <div class="container">
             <h1 class="logo">Cửa Hàng</h1>
@@ -20,11 +247,26 @@
                 <button class="btn-search" onclick="searchProduct()">Tìm kiếm</button>
             </div>
             <div class="header-buttons">
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="dropbtn">{{ user.username }} <i class="fa fa-caret-down"></i></button>
+                    <div class="dropdown-content">
+                        <a href="#">Profile</a>
+                        <form action="{% url 'logout' %}" method="post" style="margin: 0; padding: 0;">
+                            {% csrf_token %}
+                            <button type="submit"
+                                style="background:none; border:none; padding: 12px 16px; color: #333; width: 100%; text-align: left; cursor: pointer;">Logout</button>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
                 <a class="btn-login" href="{% url 'login' %}">Đăng nhập</a>
+                {% endif %}
                 <button class="btn-cart" onclick="showCart()">Giỏ hàng (<span id="cart-count">0</span>)</button>
             </div>
         </div>
     </header>
+
 
     <div class="container">
         <div class="product-container" id="productContainer">
@@ -49,16 +291,6 @@
         </div>
     </div>
 
-    <!-- Modal đăng nhập -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <h2>Đăng nhập</h2>
-            <input type="text" id="username" placeholder="Tên đăng nhập">
-            <input type="password" id="password" placeholder="Mật khẩu">
-            <button class="btn-submit" onclick="login()">Đăng nhập</button>
-            <button class="btn-close" onclick="hideLogin()">Đóng</button>
-        </div>
-    </div>
 
     <script src="../static/js/Shop.js"></script>
 </body>

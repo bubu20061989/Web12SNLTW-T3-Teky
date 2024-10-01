@@ -2,14 +2,16 @@ from django.http import HttpResponse
 from django.template import loader
 from .forms import EmployeeForm, ProductForm
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Employee, Product
-from django.contrib.auth import authenticate, login
+from .models import Employee, Product , CustomUser
+from django.contrib.auth import authenticate, login , logout 
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 
 
 def loadNhanSu(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
         return render(request, 'error.html')
+    print(request.method)
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
         if form.is_valid():
@@ -88,14 +90,18 @@ def loadShopProduct(request):
     return render(request, 'Shop.html', {'Products': product})
 
 def loadLogin(request):
+    # if request.user.is_authenticated():
+    #     return render(request, 'login.html')
+    print(request.method)
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        print(username)
+        print(password)
         if user is not None:
-            login(request, user)
+            login(request, user) 
             return redirect('product')  # Redirect to the 'nhanSu' page after login
-
         else:
             messages.error(request, 'Tên đăng nhập hoặc mật khẩu không chính xác.')
     return render(request, 'login.html')
@@ -104,7 +110,26 @@ def loadError(request):
     return render(request, 'error.html')
 
 def loadDangKi(request):
+    print('Load Dang Ki')
+    if request.method == 'POST':
+        username = request.POST['name']
+        password = request.POST['password']
+        # 
+        email = request.POST['email']
+        # user = User.objects.create_user(username, email, password)
+        user = CustomUser(
+            username=username,
+            email=email,
+            password = make_password(password),  # Mã hóa mật khẩu,
+            role='customer'
+        )
+        user.save()
+        return redirect('login')  # Redirect to the 'nhanSu' page after login
     return render(request, 'dangKi.html')
 
 def loadLogout(request):
-    return render(request, 'logout.html')
+    print(request.method)
+    if request.method == 'POST':
+        logout(request)
+        return redirect('login')
+    return render(request, 'error.html')

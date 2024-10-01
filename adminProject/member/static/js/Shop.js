@@ -46,16 +46,16 @@ function hideLogin() {
     document.getElementById("loginModal").style.display = "none";
 }
 
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    if (username === "admin" && password === "12345") {
-        alert("Đăng nhập thành công!");
-        hideLogin();
-    } else {
-        alert("Tên đăng nhập hoặc mật khẩu không đúng!");
-    }
-}
+// function login() {
+//     const username = document.getElementById("username").value;
+//     const password = document.getElementById("password").value;
+//     if (username === "admin" && password === "12345") {
+//         alert("Đăng nhập thành công!");
+//         hideLogin();
+//     } else {
+//         alert("Tên đăng nhập hoặc mật khẩu không đúng!");
+//     }
+// }
 
 // Hiển thị sản phẩm khi trang được tải
 displayProducts();
