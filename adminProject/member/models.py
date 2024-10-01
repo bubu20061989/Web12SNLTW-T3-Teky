@@ -14,7 +14,18 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username} (Employee ID: {self.employee_id}, Role: {self.role})"
-        
+
+class Customer(models.Model):
+    customer_id = models.CharField(max_length=10, unique=True)
+    customer_name = models.CharField(max_length=100)
+    customer_phone = models.CharField(max_length=15)
+    customer_email = models.EmailField()
+    customer_role = models.CharField(max_length=10, default='customer')
+    
+    def __str__(self):
+        return f"{self.customer_name} (Customer ID: {self.customer_id}, Role: {self.customer_role})"
+    
+
 class Employee(models.Model):
     STATUS_CHOICES = [
         ('Active', 'Active'),
@@ -43,7 +54,7 @@ class Product(models.Model):
     STATUS_CHOICES = [
         ('in_stock', 'In Stock'),
         ('running_out', 'Running Out'),
-        ('expired', 'Expired'),
+        # ('expired', 'Expired'),
     ]
     
     TYPE_CHOICES = [
@@ -58,7 +69,7 @@ class Product(models.Model):
     type = models.CharField(
         max_length=20,
         choices=TYPE_CHOICES,
-        default='',
+        default='aoThun',
     )
     amount = models.PositiveIntegerField()
     status = models.CharField(
