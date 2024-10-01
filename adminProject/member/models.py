@@ -15,15 +15,15 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.username} (Employee ID: {self.employee_id}, Role: {self.role})"
 
-class Customer(models.Model):
-    customer_id = models.CharField(max_length=10, unique=True)
-    customer_name = models.CharField(max_length=100)
-    customer_phone = models.CharField(max_length=15)
-    customer_email = models.EmailField()
-    customer_role = models.CharField(max_length=10, default='customer')
+# class Customer(models.Model):
+#     customer_id = models.CharField(max_length=10, unique=True)
+#     customer_name = models.CharField(max_length=100)
+#     customer_phone = models.CharField(max_length=15)
+#     customer_email = models.EmailField()
+#     customer_role = models.CharField(max_length=10, default='customer')
     
-    def __str__(self):
-        return f"{self.customer_name} (Customer ID: {self.customer_id}, Role: {self.customer_role})"
+#     def __str__(self):
+#         return f"{self.customer_name} (Customer ID: {self.customer_id}, Role: {self.customer_role})"
     
 
 class Employee(models.Model):

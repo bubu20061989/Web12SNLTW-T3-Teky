@@ -58,7 +58,7 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'product_id': forms.TextInput(attrs={'class': 'form-input'}),
             'value': forms.NumberInput(attrs={'step': '1','class': 'form-input'}),
-            'type': forms.TextInput(attrs={'class': 'form-input'}),
-            'amount': forms.TextInput(attrs={'class': 'form-input'}),
+            'type': forms.Select(choices=Product.TYPE_CHOICES),
+            'amount': forms.NumberInput(attrs={'class': 'form-input'}),
             'status': forms.Select(choices=Product.STATUS_CHOICES),
         }
