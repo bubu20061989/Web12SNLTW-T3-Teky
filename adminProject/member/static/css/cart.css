@@ -1,0 +1,71 @@
+/* cart/static/cart/css/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1,
+h2,
+h3 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+}
+
+.quantity-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-form button {
+    padding: 5px 10px;
+    margin: 0 5px;
+}
+
+.quantity-form input[type="number"] {
+    width: 50px;
+    text-align: center;
+}
+
+.checkout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.checkout-button:hover {
+    background-color: #218838;
+}
+
+button {
+    cursor: pointer;
+}
+
+.cart-summary {
+    text-align: right;
+}
+
+.messages {
+    color: green;
+}

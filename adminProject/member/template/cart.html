@@ -1,0 +1,62 @@
+<!-- cart/templates/cart/cart_detail.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="../static/css/cart.css">
+</head>
+
+<body>
+    <h1>Giỏ Hàng Của Bạn</h1>
+    {% if cart.items.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Mã Hàng Hóa</th>
+                <th>Sản Phẩm</th>
+                <th>Giá</th>
+                <th>Số Lượng</th>
+                <th>Tổng</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart.items.all %}
+            <tr>
+                <td>{{ item.product.code }}</td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price|floatformat:2 }} VND</td>
+                <td>
+                    <form action="{% url 'cart:cart_update' item.id %}" method="post" class="quantity-form">
+                        {% csrf_token %}
+                        <button type="submit" name="quantity" value="{{ item.quantity|add:-1 }}" {% if item.quantity <=1
+                            %}disabled{% endif %}>-</button>
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                        <button type="submit" name="quantity" value="{{ item.quantity|add:1 }}">+</button>
+                    </form>
+                </td>
+                <td>{{ item.get_total_price|floatformat:2 }} VND</td>
+                <td>
+                    <form action="{% url 'cart:cart_remove' item.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="cart-summary">
+        <h3>Tổng Tiền: {{ cart.get_total_price|floatformat:2 }} VND</h3>
+        <a href="{% url 'cart:checkout' %}" class="checkout-button">Thanh Toán</a>
+    </div>
+    {% else %}
+    <p>Giỏ hàng của bạn đang trống.</p>
+    {% endif %}
+</body>
+
+</html>

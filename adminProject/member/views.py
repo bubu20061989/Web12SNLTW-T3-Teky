@@ -6,6 +6,7 @@ from .models import Employee, Product , CustomUser
 from django.contrib.auth import authenticate, login , logout 
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from django.views.decorators.csrf import csrf_exempt
 
 
 def loadNhanSu(request):
@@ -111,13 +112,10 @@ def loadLogin(request):
 def loadError(request):
     return render(request, 'error.html')
 
+@csrf_exempt
 def createCart(request, product_id):
     print(product_id)
     return render(request, 'error.html')
-
-
-
-
 
 def loadDangKi(request):
     if request.method == 'POST':
@@ -142,3 +140,9 @@ def loadLogout(request):
         logout(request)
         return redirect('login')
     return render(request, 'error.html')
+
+def loadCart(request):
+    # print('hello', request.user.username)
+    if not request.user.username:
+        return render(request, 'login.html')
+    return render(request, 'checkout.html')
