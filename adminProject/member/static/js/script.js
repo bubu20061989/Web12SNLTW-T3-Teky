@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // delete button
     deleteButton.addEventListener('click', function() {
         if (selectedMainId) {
-            employeeForm.action = `/employee/delete/${selectedMainId}/`; // URL để cập nhật
+            employeeForm.action = ``/employee/delete/${selectedMainId}/`;` // URL để cập nhật
             employeeForm.submit();
         } else {
             alert('Please select an employee to delete.');
