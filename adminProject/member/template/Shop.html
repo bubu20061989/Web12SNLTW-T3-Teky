@@ -275,7 +275,7 @@
                 <img src="https://via.placeholder.com/150">
                 <h3>{{ Product.product_id }}</h3>
                 <p>Giá: {{ Product.value }} VND</p>
-                <button onclick="addToCart(Product.product_id)">Thêm vào giỏ</button>
+                <button onclick="addToCart('{{ Product.product_id }}')">Thêm vào giỏ</button>
             </div>
             {% empty %}
             {% endfor %}
@@ -292,7 +292,7 @@
     </div>
 
 
-    <script src="../static/js/Shop.js"></script>
+    <script src="../static/js/Shop2.js"></script>
 </body>
 
 </html>

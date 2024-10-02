@@ -38,7 +38,6 @@ def updateNhanSu(request, employee_id):
 
 
 def deleteNhanSu(request, employee_id):
-    print('Delete NhanSu')
     employee = get_object_or_404(Employee, employee_id=employee_id)  # Kiểm tra nhân viên có tồn tại không
     if request.method == 'POST':
         employee.delete()  # Xóa nhân viên
@@ -101,7 +100,10 @@ def loadLogin(request):
         print(password)
         if user is not None:
             login(request, user) 
-            return redirect('product')  # Redirect to the 'nhanSu' page after login
+            if user.role == 'admin' or user.role == 'manager':
+                return redirect('nhanSu')  # Redirect to the 'nhanSu' page after login
+            else:
+                return redirect('shop')  # Redirect to the 'nhanSu' page after login
         else:
             messages.error(request, 'Tên đăng nhập hoặc mật khẩu không chính xác.')
     return render(request, 'login.html')
@@ -109,8 +111,11 @@ def loadLogin(request):
 def loadError(request):
     return render(request, 'error.html')
 
+def createCart(request, product_id):
+    print(product_id)
+    return render(request, 'error.html')
+
 def loadDangKi(request):
-    print('Load Dang Ki')
     if request.method == 'POST':
         username = request.POST['name']
         password = request.POST['password']

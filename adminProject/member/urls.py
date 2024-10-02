@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path
 from member import views
@@ -11,6 +10,7 @@ urlpatterns = [
     path('dangKi', views.loadDangKi, name='dangKi'),
     path('logout', views.loadLogout, name='logout'),
     # path('home', views.loadHome, name='home'),
+    path('createCart/<str:product_id>/', views.createCart, name='error'),
     path('error', views.loadError, name='error'),
     path('employee/update/<str:employee_id>/', views.updateNhanSu, name='update_employee'),
     path('employee/delete/<str:employee_id>/', views.deleteNhanSu, name='delete_employee'),
