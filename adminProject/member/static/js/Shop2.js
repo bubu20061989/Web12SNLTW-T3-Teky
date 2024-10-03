@@ -80,6 +80,7 @@ function hideCart() {
 function checkout() {
     alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
     hideCart(); // Hide cart after checkout
+
 }
 
 // Save cart to localStorage
@@ -96,3 +97,5 @@ function loadCartFromLocalStorage() {
 }
 
 {/* <img src="product${productId}.jpg" alt="Product ${productId}"> */}
+
+// #hello
