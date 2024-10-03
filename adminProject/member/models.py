@@ -92,7 +92,7 @@ class Cart(models.Model):
     cart_id = models.CharField(max_length=10)
     user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-    status = models.CharField(max_length= 20, choices=TRANG_THAI, default='chuaThanhToan')
+    status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
 
     def __str__(self):
         return f"Cart for {self.user.username}"

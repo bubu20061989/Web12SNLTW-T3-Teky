@@ -8,7 +8,6 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
 
-
 def loadNhanSu(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
         return render(request, 'error.html')
@@ -24,7 +23,6 @@ def loadNhanSu(request):
     employees = Employee.objects.all()
     return render(request, 'nhanSu.html', {'form': form, 'employees': employees})
 
-
 def updateNhanSu(request, employee_id):
     print('Update NhanSu')
     employee = get_object_or_404(Employee, employee_id=employee_id)  # Kiểm tra nhân viên có tồn tại không
@@ -37,14 +35,12 @@ def updateNhanSu(request, employee_id):
         form = EmployeeForm(instance=employee)    
     return render(request, 'nhanSu.html', {'form': form})
 
-
 def deleteNhanSu(request, employee_id):
     employee = get_object_or_404(Employee, employee_id=employee_id)  # Kiểm tra nhân viên có tồn tại không
     if request.method == 'POST':
         employee.delete()  # Xóa nhân viên
         return redirect('nhanSu')  # Redirect về trang danh sách nhân viên   
     return render(request, 'nhanSu.html', {'employee': employee})
-
 
 def loadProduct(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
@@ -72,7 +68,6 @@ def updateProduct(request, product_id):
     else:
         form = ProductForm(instance=product)   
     return render(request, 'Products.html', {'form': form})
-
 
 def deleteProduct(request, product_id):
     print('Delete Product')
@@ -112,12 +107,6 @@ def loadLogin(request):
 def loadError(request):
     return render(request, 'error.html')
 
-@csrf_exempt
-def createCart(request, product_id):
-    
-    print(product_id)
-    return render(request, 'error.html')
-
 def loadDangKi(request):
     if request.method == 'POST':
         username = request.POST['name']
@@ -142,8 +131,14 @@ def loadLogout(request):
         return redirect('login')
     return render(request, 'error.html')
 
-def loadCart(request):
+@csrf_exempt
+def createCart(request, product_id):
+    
+    print(product_id)
+    return render(request, 'error.html')
+
+def loadCheckout(request):
     # print('hello', request.user.username)
-    if not request.user.username:
-        return render(request, 'login.html')
+    # if not request.user.username:
+    #     return render(request, 'login.html')
     return render(request, 'checkout.html')

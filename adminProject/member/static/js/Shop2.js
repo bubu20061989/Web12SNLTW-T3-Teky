@@ -23,13 +23,14 @@ function updateCartUI() {
     cartItems.innerHTML = ''; // Clear the current cart items
 
     let total = 0;
+    console.log(cart)
     for (let productId in cart) {
         const item = cart[productId];
         const quantity = item.quantity;
         const price = item.price;
 
         total += quantity * price; // Update total price
-
+        
         // Create element for each product in the cart
         let li = document.createElement('li');
         li.innerHTML = `
@@ -78,8 +79,16 @@ function hideCart() {
 
 // Checkout
 function checkout() {
+    const cartData = Object.keys(cart).map(productId => ({
+        id: productId,
+        quantity: cart[productId].quantity,
+        price: cart[productId].price
+    }));
+    window.location.href = "createCart"
+    
     alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
     hideCart(); // Hide cart after checkout
+
 
 }
 
