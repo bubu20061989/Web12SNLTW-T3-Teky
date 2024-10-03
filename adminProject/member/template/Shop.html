@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart Interface</title>
     <link rel="stylesheet" href="{% static 'css/Shop.css' %}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome for icons -->
 </head>
 <body>
 
@@ -37,30 +37,20 @@
         </div>
     </header>
 
-
-       <!-- Header with Cart Button -->
-       <!-- <header>
-        <h1>My Online Store</h1>
-        <div>
-            <button id="cartButton" onclick="showCart()">Giỏ hàng (<span id="cart-count">0</span>)</button>
-        </div>
-    </header> -->
-
     <!-- Product List -->
     <section class="products">
-        {% for Product in Products %}
+        {% for product in Products %}
         <div class="product">
-            <img src="product1.jpg" alt="Product 1">
-            <h2>{{ Product.product_id }}</h2>
-            <p>{{ Product.value }}</p>
-            <button class="btn-add" onclick="addToCart('{{ Product.product_id }}','{{ Product.value }}')">Thêm vào giỏ</button>
+            <img src="{{ product.image_url }}" alt="{{ product.product_id }}">
+            <h2>{{ product.product_id }}</h2>
+            <p>{{ product.value }} VND</p>
+            <button class="btn-add" onclick="addToCart('{{ product.product_id }}', '{{ product.value }}')">Thêm vào giỏ</button>
         </div>
         {% endfor %}
-        <!-- Add more products similarly -->
     </section>
 
     <!-- Modal Giỏ Hàng -->
-    <div class="modal" id="cartModal">
+    <div class="modal" id="cartModal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="hideCart()">&#10005;</span>
             <h2>Giỏ hàng của bạn</h2>
@@ -73,7 +63,6 @@
             <button class="btn-checkout" onclick="checkout()">Tính tiền</button>
         </div>
     </div>
-
 
     <script src="{% static 'js/Shop2.js' %}"></script>
 </body>

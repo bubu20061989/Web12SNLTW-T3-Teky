@@ -1,100 +1,98 @@
 let cart = {};
 
-// Khởi tạo giỏ hàng khi tải trang
+// Initialize the cart when the page loads
 window.onload = function () {
     loadCartFromLocalStorage();
     updateCartUI();
 };
 
-// Thêm sản phẩm vào giỏ hàng
-function addToCart(productId,price ) {
+// Add product to cart
+function addToCart(productId, price) {
     if (cart[productId]) {
-        cart[productId]++;
-        cart[productId].price = price;
-        console.log(cart[productId].price)
+        cart[productId].quantity++; // Increase the quantity
     } else {
-        cart[productId] = 1;
-        cart[productId].price = price;
-        console.log(cart[productId].price )
+        cart[productId] = { quantity: 1, price: price }; // Initialize the product with quantity 1
     }
     saveCartToLocalStorage();
     updateCartUI();
 }
 
-// Cập nhật giao diện giỏ hàng
+// Update the cart UI
 function updateCartUI() {
     const cartItems = document.getElementById('cartItems');
-    cartItems.innerHTML = ''; // Xóa các sản phẩm hiện tại trong giỏ hàng
+    cartItems.innerHTML = ''; // Clear the current cart items
 
     let total = 0;
     for (let productId in cart) {
-        let quantity = cart[productId];
-        let price = 10000; // Lấy giá sản phẩm
-        total += quantity * price;
+        const item = cart[productId];
+        const quantity = item.quantity;
+        const price = item.price;
 
-        // Tạo phần tử cho từng sản phẩm trong giỏ hàng
+        total += quantity * price; // Update total price
+
+        // Create element for each product in the cart
         let li = document.createElement('li');
         li.innerHTML = `
-            <img src="product${productId}.jpg" alt="Product ${productId}">
-            <span>Product ${productId}</span>
-            <button onclick="updateQuantity(${productId}, 'minus')">-</button>
+            <span>${productId}</span>
+            <button onclick="updateQuantity('${productId}', 'minus')">-</button>
             <span>${quantity}</span>
-            <button onclick="updateQuantity(${productId}, 'plus')">+</button>
+            <button onclick="updateQuantity('${productId}', 'plus')">+</button>
             <span>${price * quantity} VND</span>
-            <button onclick="removeFromCart(${productId})">X</button>
+            <button onclick="removeFromCart('${productId}')">X</button>
         `;
         cartItems.appendChild(li);
     }
 
-    // Cập nhật tổng tiền
-    document.getElementById('total-price').textContent = total;
-    document.getElementById('cart-count').textContent = Object.values(cart).reduce((a, b) => a + b, 0);
+    // Update total price and cart item count
+    document.getElementById('total-price').textContent = total + " VND";
+    document.getElementById('cart-count').textContent = Object.values(cart).reduce((a, b) => a + b.quantity, 0);
 }
 
-// Cập nhật số lượng sản phẩm
+// Update product quantity
 function updateQuantity(productId, action) {
     if (action === 'plus') {
-        cart[productId]++;
-    } else if (action === 'minus' && cart[productId] > 1) {
-        cart[productId]--;
+        cart[productId].quantity++;
+    } else if (action === 'minus' && cart[productId].quantity > 1) {
+        cart[productId].quantity--;
     }
     saveCartToLocalStorage();
     updateCartUI();
 }
 
-// Xóa sản phẩm khỏi giỏ hàng
+// Remove product from cart
 function removeFromCart(productId) {
     delete cart[productId];
     saveCartToLocalStorage();
     updateCartUI();
 }
 
-// Hiển thị giỏ hàng
+// Show the cart modal
 function showCart() {
     document.getElementById('cartModal').style.display = 'block';
 }
 
-// Ẩn giỏ hàng
+// Hide the cart modal
 function hideCart() {
     document.getElementById('cartModal').style.display = 'none';
 }
 
 // Checkout
 function checkout() {
-    alert("Tiến hành thanh toán. Tổng tiền: " + document.getElementById('total-price').textContent + " VND");
-    hideCart(); // Ẩn giỏ hàng sau khi thanh toán
+    alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
+    hideCart(); // Hide cart after checkout
 }
 
-
-// Lưu giỏ hàng vào localStorage
+// Save cart to localStorage
 function saveCartToLocalStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Tải giỏ hàng từ localStorage
+// Load cart from localStorage
 function loadCartFromLocalStorage() {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
         cart = JSON.parse(savedCart);
     }
 }
+
+{/* <img src="product${productId}.jpg" alt="Product ${productId}"> */}
