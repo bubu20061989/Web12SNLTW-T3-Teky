@@ -7,11 +7,15 @@ window.onload = function () {
 };
 
 // Thêm sản phẩm vào giỏ hàng
-function addToCart(productId) {
+function addToCart(productId,price ) {
     if (cart[productId]) {
         cart[productId]++;
+        cart[productId].price = price;
+        console.log(cart[productId].price)
     } else {
         cart[productId] = 1;
+        cart[productId].price = price;
+        console.log(cart[productId].price )
     }
     saveCartToLocalStorage();
     updateCartUI();
@@ -25,7 +29,7 @@ function updateCartUI() {
     let total = 0;
     for (let productId in cart) {
         let quantity = cart[productId];
-        let price = getPrice(productId); // Lấy giá sản phẩm
+        let price = 10000; // Lấy giá sản phẩm
         total += quantity * price;
 
         // Tạo phần tử cho từng sản phẩm trong giỏ hàng
@@ -81,15 +85,6 @@ function checkout() {
     hideCart(); // Ẩn giỏ hàng sau khi thanh toán
 }
 
-// Lấy giá sản phẩm
-function getPrice(productId) {
-    // Thay thế với logic thực tế để lấy giá sản phẩm
-    const prices = {
-        1: 100000,
-        2: 150000
-    };
-    return prices[productId];
-}
 
 // Lưu giỏ hàng vào localStorage
 function saveCartToLocalStorage() {

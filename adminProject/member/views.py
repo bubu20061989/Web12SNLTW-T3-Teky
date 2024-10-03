@@ -114,6 +114,7 @@ def loadError(request):
 
 @csrf_exempt
 def createCart(request, product_id):
+    
     print(product_id)
     return render(request, 'error.html')
 

@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    
+
     <header>
         <div class="container">
             <h1 class="logo">Cửa Hàng</h1>
@@ -53,11 +53,9 @@
             <img src="product1.jpg" alt="Product 1">
             <h2>{{ Product.product_id }}</h2>
             <p>{{ Product.value }}</p>
-            <button class="btn-add" onclick="addToCart('{{ Product.product_id }}')">Thêm vào giỏ</button>
+            <button class="btn-add" onclick="addToCart('{{ Product.product_id }}','{{ Product.value }}')">Thêm vào giỏ</button>
         </div>
         {% endfor %}
-
-        
         <!-- Add more products similarly -->
     </section>
 
