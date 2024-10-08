@@ -89,12 +89,15 @@ class Cart(models.Model):
         ('chuaThanhToan', 'Chua thanh toan'),
         ('daThanhToan', 'Da thanh toan'),
     ]
+    
+    cart_id = models.CharField(max_length=20, unique=True)  # Unique cart ID
     user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
 
     def __str__(self):
-        return f"Cart for {self.user_id.username}"
+        return f"Cart {self.cart_id} for {self.user_id.username}"
+
 
 class CartItem(models.Model):
     cart_id = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)

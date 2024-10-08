@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, Employee, Product
+from .models import CustomUser, Employee, Product, Cart, CartItem
 
 # Đăng ký CustomUser
 @admin.register(CustomUser)
@@ -33,3 +33,19 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     ordering = ('type',)
     #thay vien
+
+# Register Cart
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('cart_id', 'user_id', 'status', 'created_at')  # Customize fields to display
+    search_fields = ('cart_id', 'user_id__username')  # Allows searching by cart_id or username
+    list_filter = ('status', 'created_at')  # Filters for status and creation date
+    ordering = ('-created_at',)  # Orders by the most recent carts
+
+# Register CartItem
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ('cart_id', 'product_id', 'quantity', 'price')  # Customize fields to display
+    search_fields = ('cart_id__cart_id', 'product_id__product_id')  # Allows searching by cart or product ID
+    list_filter = ('cart_id', 'product_id')  # Filters for cart and product
+    ordering = ('cart_id', 'product_id')  # Orders by cart and product
