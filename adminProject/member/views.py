@@ -142,3 +142,38 @@ def loadCheckout(request):
     # if not request.user.username:
     #     return render(request, 'login.html')
     return render(request, 'checkout.html')
+
+# @login_required
+# def add_to_cart(request, product_id):
+#     product = get_object_or_404(Product, id=product_id)
+    
+#     # Get or create the cart for the logged-in user
+#     cart, created = Cart.objects.get_or_create(user=request.user)
+    
+#     # Get or create the cart item
+#     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    
+#     if not created:
+#         # If the item already exists, increment the quantity
+#         cart_item.quantity += 1
+#         cart_item.save()
+    
+#     return redirect('cart_view')
+
+# @login_required
+# def update_cart_item(request, item_id):
+#     cart_item = get_object_or_404(CartItem, id=item_id)
+    
+#     # Update the quantity based on user input
+#     new_quantity = request.POST.get('quantity', 1)
+#     cart_item.quantity = new_quantity
+#     cart_item.save()
+    
+#     return redirect('cart_view')
+
+# @login_required
+# def remove_from_cart(request, item_id):
+#     cart_item = get_object_or_404(CartItem, id=item_id)
+#     cart_item.delete()
+    
+#     return redirect('cart_view')

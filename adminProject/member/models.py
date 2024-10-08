@@ -89,17 +89,16 @@ class Cart(models.Model):
         ('chuaThanhToan', 'Chua thanh toan'),
         ('daThanhToan', 'Da thanh toan'),
     ]
-    cart_id = models.CharField(max_length=10)
     user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
 
     def __str__(self):
-        return f"Cart for {self.user.username}"
+        return f"Cart for {self.user_id.username}"
 
 class CartItem(models.Model):
     cart_id = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_id = models.ForeignKey('Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
 
@@ -107,7 +106,7 @@ class CartItem(models.Model):
         unique_together = ('cart_id', 'product_id')
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.product_id} in cart"
+        return f"{self.quantity} of {self.product_id} in Cart"
     
 # class HopDong(models.Model):
 #     CONTRACT_STATUS_CHOICES = [
