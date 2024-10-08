@@ -110,7 +110,7 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.product_id} in Cart"
-    #thay vien
+################################################################
     
 # class HopDong(models.Model):
 #     CONTRACT_STATUS_CHOICES = [

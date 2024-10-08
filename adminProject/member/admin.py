@@ -49,3 +49,5 @@ class CartItemAdmin(admin.ModelAdmin):
     search_fields = ('cart_id__cart_id', 'product_id__product_id')  # Allows searching by cart or product ID
     list_filter = ('cart_id', 'product_id')  # Filters for cart and product
     ordering = ('cart_id', 'product_id')  # Orders by cart and product
+
+    # Thay vien
