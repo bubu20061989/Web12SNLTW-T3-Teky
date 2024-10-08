@@ -50,4 +50,4 @@ class CartItemAdmin(admin.ModelAdmin):
     list_filter = ('cart_id', 'product_id')  # Filters for cart and product
     ordering = ('cart_id', 'product_id')  # Orders by cart and product
 
-################################
+# ################################

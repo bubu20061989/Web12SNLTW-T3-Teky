@@ -89,8 +89,8 @@ class Cart(models.Model):
         ('chuaThanhToan', 'Chua thanh toan'),
         ('daThanhToan', 'Da thanh toan'),
     ]
-    
-    cart_id = models.CharField(max_length=20, unique=True)  # Unique cart ID
+
+    cart_id = models.CharField(max_length=20, unique=True, primary_key=True)  # Đặt cart_id làm khóa chính
     user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
@@ -98,9 +98,15 @@ class Cart(models.Model):
     def __str__(self):
         return f"Cart {self.cart_id} for {self.user_id.username}"
 
+    class Meta:
+        # Bỏ qua khóa chính mặc định
+        db_table = 'cart'
+
+
+
 
 class CartItem(models.Model):
-    cart_id = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)  # ForeignKey đến Cart
     product_id = models.ForeignKey('Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
@@ -110,6 +116,7 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.product_id} in Cart"
+
 
     
 # class HopDong(models.Model):

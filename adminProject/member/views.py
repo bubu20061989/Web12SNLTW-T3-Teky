@@ -8,6 +8,9 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+import json
+from django.http import JsonResponse
+
 
 def loadNhanSu(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
@@ -132,11 +135,25 @@ def loadLogout(request):
         return redirect('login')
     return render(request, 'error.html')
 
+
 @csrf_exempt
 def createCart(request):
-    created_at = timezone.now().date()
-    print(request.user.username)
-    print(created_at)
+    if request.method == 'POST':
+        try:
+            # Parse JSON data from the request body
+            data = json.loads(request.body)
+            cartData = data.get('cartData', None)
+            #Luu vao cart
+            
+
+
+
+            #luu vao cartitems
+            print(request.user.username)
+            print(cartData)  # Now this should print the cartData
+            return JsonResponse({'success': True, 'message': 'Cart processed successfully'})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON data'})
     return render(request, 'checkout.html')
 
 def loadCheckout(request):
