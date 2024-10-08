@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 def loadNhanSu(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
@@ -133,7 +134,9 @@ def loadLogout(request):
 
 @csrf_exempt
 def createCart(request):
-    # print(product_id)
+    created_at = timezone.now().date()
+    print(request.user.username)
+    print(created_at)
     return render(request, 'checkout.html')
 
 def loadCheckout(request):
