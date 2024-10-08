@@ -79,18 +79,53 @@ function hideCart() {
 
 // Checkout
 function checkout() {
+    console.log('hello')
     const cartData = Object.keys(cart).map(productId => ({
         id: productId,
         quantity: cart[productId].quantity,
         price: cart[productId].price
     }));
-    window.location.href = "createCart"
-    
-    alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
-    hideCart(); // Hide cart after checkout
-
-
+    //ajax
+    // Send cart data to Django backend
+    fetch('/createCart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Add CSRF token for security
+        },
+        body: JSON.stringify({ cartData })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
+            hideCart(); // Hide cart after checkout
+            window.location.href = "/cart/"; // Redirect to cart or success page
+        } else {
+            alert("Error during checkout: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
 }
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
 
 // Save cart to localStorage
 function saveCartToLocalStorage() {
