@@ -110,14 +110,14 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} of {self.product_id} in Cart"
-################################################################
+
     
 # class HopDong(models.Model):
 #     CONTRACT_STATUS_CHOICES = [
 #         ('active', 'Active'),
 #         ('terminated', 'Terminated'),
 #         ('pending', 'Pending'),
-#     ]
+#     ] 
 
 #     CONTRACT_TYPE_CHOICES = [
 #         ('full_time', 'Full-Time'),
