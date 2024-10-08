@@ -10,13 +10,14 @@ urlpatterns = [
     path('dangKi', views.loadDangKi, name='dangKi'),
     path('logout', views.loadLogout, name='logout'),
     # path('home', views.loadHome, name='home'),
+    path('createCart', views.createCart, name='cart'),
     path('createCart/<str:product_id>/', views.createCart, name='error'),
     path('checkout', views.loadCheckout, name='checkout'),
-    path('cart/', views.cart_view, name='cart_view'),
+    # path('cart/', views.cart_view, name='cart_view'),
     # path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     # path('cart/update/<int:item_id>/', views.update_cart_item, name='update_cart_item'),
     # path('cart/remove/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
-    
+
     # path('cart/delete/<str:product_id>/', views.deleteCart, name='delete_cart'),
     # path('cart/update/<str:product_id>/<int:quantity>/', views.updateCart, name='update_cart'),
     # path('cart/checkout/', views.checkoutCart, name='checkout_cart'),
