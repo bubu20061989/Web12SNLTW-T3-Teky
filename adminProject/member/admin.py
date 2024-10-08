@@ -32,3 +32,4 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('product_id', 'type')
     list_filter = ('status',)
     ordering = ('type',)
+    #thay vien
