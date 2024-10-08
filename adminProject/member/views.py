@@ -132,10 +132,9 @@ def loadLogout(request):
     return render(request, 'error.html')
 
 @csrf_exempt
-def createCart(request, product_id):
-    
-    print(product_id)
-    return render(request, 'error.html')
+def createCart(request):
+    # print(product_id)
+    return render(request, 'checkout.html')
 
 def loadCheckout(request):
     # print('hello', request.user.username)
