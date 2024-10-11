@@ -1,5 +1,3 @@
-from django.http import HttpResponse
-from django.template import loader
 from .forms import EmployeeForm, ProductForm
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Employee, Product , CustomUser
@@ -7,9 +5,9 @@ from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
-from django.utils import timezone
 import json
 from django.http import JsonResponse
+from .models import Cart, CartItem
 
 
 def loadNhanSu(request):
@@ -135,31 +133,72 @@ def loadLogout(request):
         return redirect('login')
     return render(request, 'error.html')
 
-
 @csrf_exempt
 def createCart(request):
     if request.method == 'POST':
         try:
-            # Parse JSON data from the request body
+            # Parse the JSON data from the request body
+            print(request.user)
             data = json.loads(request.body)
             cartData = data.get('cartData', None)
-            #Luu vao cart
-            
 
+            if cartData is None:
+                return JsonResponse({'success': False, 'message': 'No cart data provided'})
 
+            # Retrieve or create a Cart for the user
+            user_cart, created = Cart.objects.get_or_create(user_id=request.user)
 
-            #luu vao cartitems
-            print(request.user.username)
-            print(cartData)  # Now this should print the cartData
+            # Clear existing cart items (optional, depending on how you want to handle it)
+            user_cart.cartitem_set.all().delete()
+
+            # Loop through cartData and save items to the Cart
+            for item in cartData:
+                product_id = item['id']
+                quantity = item['quantity']
+                price = item['price']
+
+                # Fetch the Product instance using the provided product_id
+                try:
+                    product = Product.objects.get(product_id=product_id)  # Adjust if your field name is different
+                except Product.DoesNotExist:
+                    return JsonResponse({'success': False, 'message': f'Product with ID {product_id} does not exist'})
+
+                # Create and save each CartItem with the Product instance
+                CartItem.objects.create(
+                    cart_id=user_cart,
+                    product_id=product,  # Pass the Product instance here
+                    quantity=quantity,
+                    price=price
+                )
+
             return JsonResponse({'success': True, 'message': 'Cart processed successfully'})
+
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'message': 'Invalid JSON data'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': f'An error occurred: {str(e)}'})
+
     return render(request, 'checkout.html')
 
+
+# @csrf_exempt
+# def createCart(request):
+#     if request.method == 'POST':
+#         try:
+#             # Parse JSON data from the request body
+#             data = json.loads(request.body)
+#             cartData = data.get('cartData', None)
+#             #Luu vao cart
+
+#             #luu vao cartitems
+#             print(request.user.username)
+#             print(cartData)  # Now this should print the cartData
+#             return JsonResponse({'success': True, 'message': 'Cart processed successfully'})
+#         except json.JSONDecodeError:
+#             return JsonResponse({'success': False, 'message': 'Invalid JSON data'})
+#     return render(request, 'checkout.html')
+
 def loadCheckout(request):
-    # print('hello', request.user.username)
-    # if not request.user.username:
-    #     return render(request, 'login.html')
     return render(request, 'checkout.html')
 
 # @login_required

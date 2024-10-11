@@ -79,15 +79,13 @@ function hideCart() {
 
 // Checkout
 function checkout() {
-    console.log('hello')
     const cartData = Object.keys(cart).map(productId => ({
         id: productId,
         quantity: cart[productId].quantity,
         price: cart[productId].price
     }));
-    //ajax
     // Send cart data to Django backend
-    fetch('/createCart/', {
+    fetch('/createCart', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -100,7 +98,7 @@ function checkout() {
         if (data.success) {
             alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
             hideCart(); // Hide cart after checkout
-            window.location.href = "/cart/"; // Redirect to cart or success page
+            window.location.href = "/checkout"; // Redirect to cart or success page
         } else {
             alert("Error during checkout: " + data.message);
         }

@@ -18,15 +18,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.username} (Employee ID: {self.employee_id}, Role: {self.role})"
 
-# class Customer(models.Model):
-#     customer_id = models.CharField(max_length=10, unique=True)
-#     customer_name = models.CharField(max_length=100)
-#     customer_phone = models.CharField(max_length=15)
-#     customer_email = models.EmailField()
-#     customer_role = models.CharField(max_length=10, default='customer')
-    
-#     def __str__(self):
-#         return f"{self.customer_name} (Customer ID: {self.customer_id}, Role: {self.customer_role})"
+
     
 
 class Employee(models.Model):
@@ -55,8 +47,8 @@ class Employee(models.Model):
 
 class Product(models.Model):
     STATUS_CHOICES = [
-        ('in_stock', 'In Stock'),
-        ('running_out', 'Running Out'),
+        ('in_stock', 'Còn hàng'),
+        ('running_out', 'Hết hàng'),
         # ('expired', 'Expired'),
     ]
     
@@ -86,13 +78,14 @@ class Product(models.Model):
     
 class Cart(models.Model):
     TRANG_THAI = [
-        ('chuaThanhToan', 'Chua thanh toan'),
-        ('daThanhToan', 'Da thanh toan'),
+        ('chuaThanhToan', 'Chưa thanh toán'),
+        ('daThanhToan', 'Đã thanh toán'),
     ]
 
     cart_id = models.CharField(max_length=20, unique=True, primary_key=True)  # Đặt cart_id làm khóa chính
     user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
 
     def __str__(self):
@@ -103,13 +96,11 @@ class Cart(models.Model):
         db_table = 'cart'
 
 
-
-
 class CartItem(models.Model):
     cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)  # ForeignKey đến Cart
-    product_id = models.ForeignKey('Product', on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
-    price = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         unique_together = ('cart_id', 'product_id')

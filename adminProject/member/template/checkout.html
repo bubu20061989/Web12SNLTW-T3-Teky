@@ -1,4 +1,3 @@
-<!-- cart/templates/cart/checkout.html -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="vi">
@@ -6,43 +5,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
-    <link rel="stylesheet" href="../static/css/checkout.css">
+    <title>Order History</title>
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <!-- Optional: Include a favicon or other meta tags as needed -->
 </head>
 
 <body>
-    <div class="container">
-        <h1>Giỏ hàng của bạn</h1>
-        <div class="product">
-            <p>ID: <span id="product-id">001</span></p>
-            <p>Tên sản phẩm: <span id="product-name">Áo phông</span></p>
-            <p>Giá mỗi sản phẩm: <span id="product-price">200,000</span> VND</p>
-            <div class="quantity">
-                <button onclick="decreaseQuantity()">-</button>
-                <input type="text" id="product-quantity" value="1" readonly>
-                <button onclick="increaseQuantity()">+</button>
+    <header>
+        <div class="container">
+            <h1 class="title">Lịch Sử Đơn Hàng</h1>
+            <button class="btn-back-home" onclick="window.location.href='{% url 'shop' %}'">
+                <i class="fas fa-home"></i> Trở về Trang Chủ
+            </button>
+        </div>
+    </header>
+
+    <main>
+        {% if orders %}
+        <div class="order-list">
+            {% for order in orders %}
+            <div class="order">
+                <div class="order-header">
+                    <span class="order-id">Mã Đơn Hàng: {{ order.id }}</span>
+                    <span class="order-date">Ngày: {{ order.created_at|date:"d/m/Y H:i" }}</span>
+                    <span class="order-total">Tổng Tiền: {{ order.total_price|floatformat:2 }} VND</span>
+                </div>
+                <ul class="order-items">
+                    {% for product in Products %}
+                    <li class="order-item">
+                        <span class="item-quantity">{{ item.quantity }} x</span>
+                        <span class="item-name">{{ product.product_id }}</span>
+                        <span class="item-price">{{ item.price|floatformat:2 }} VND</span>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <p class="no-orders">Bạn chưa có đơn hàng nào.</p>
+        {% endif %}
+    </main>
 
-        <div class="product"></div>
-            <p>ID: <span id="product-id">001</span></p>
-            <p>Tên sản phẩm: <span id="product-name">Áo phông</span></p>
-            <p>Giá mỗi sản phẩm: <span id="product-price">200,000</span> VND</p>
-            <div class="quantity">
-                <button onclick="decreaseQuantity()">-</button>
-                <input type="text" id="product-quantity" value="1" readonly>
-                <button onclick="increaseQuantity()">+</button>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; {{ current_year }} Cửa Hàng. Bảo lưu mọi quyền.</p>
+    </footer>
 
-        <div class="total">
-            <p>Tổng tiền: <span id="total-price">200,000</span> VND</p>
-        </div>
-
-        <button onclick="placeOrder()">Đặt hàng</button>
-    </div>
-
-    <script src="../static/js/checkout.js"></script>
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script src="{% static 'js/checkout.js' %}"></script>
 </body>
 
 </html>
