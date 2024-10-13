@@ -21,21 +21,21 @@
     </header>
 
     <main>
-        {% if orders %}
+        {% if Cart %}
         <div class="order-list">
-            {% for order in orders %}
+            {% for cart in Carts %}
             <div class="order">
                 <div class="order-header">
-                    <span class="order-id">Mã Đơn Hàng: {{ order.id }}</span>
-                    <span class="order-date">Ngày: {{ order.created_at|date:"d/m/Y H:i" }}</span>
-                    <span class="order-total">Tổng Tiền: {{ order.total_price|floatformat:2 }} VND</span>
+                    <span class="order-id">Mã Đơn Hàng: {{ cart.cart_id }}</span>
+                    <span class="order-date">Ngày: {{ cart.created_at|date:"d/m/Y H:i" }}</span>
+                    <span class="order-total">Tổng Tiền: {{ cart.total_price|floatformat:2 }} VND</span>
                 </div>
                 <ul class="order-items">
                     {% for product in Products %}
                     <li class="order-item">
-                        <span class="item-quantity">{{ item.quantity }} x</span>
+                        <span class="item-quantity">{{ product.amount }} x</span>
                         <span class="item-name">{{ product.product_id }}</span>
-                        <span class="item-price">{{ item.price|floatformat:2 }} VND</span>
+                        <span class="item-price">{{ product.value|floatformat:2 }} VND</span>
                     </li>
                     {% endfor %}
                 </ul>

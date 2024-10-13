@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from member import views
+from .views import checkout, Cart_history
 
 urlpatterns = [
     path('nhanSu', views.loadNhanSu, name='nhanSu'),
@@ -11,8 +12,10 @@ urlpatterns = [
     path('logout', views.loadLogout, name='logout'),
     # path('home', views.loadHome, name='home'),
     path('createCart', views.createCart, name='cart'),
-    path('createCart/<str:product_id>/', views.createCart, name='error'),
-    path('checkout', views.loadCheckout, name='checkout'),
+    # path('createCart/<str:product_id>/', views.createCart, name='error'),
+    # path('checkout', views.loadCheckout, name='checkout'),
+    path('checkout', checkout, name='checkout'),
+    path('Cart-history/', Cart_history, name='cart_history'),
     # path('cart/', views.cart_view, name='cart_view'),
     # path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     # path('cart/update/<int:item_id>/', views.update_cart_item, name='update_cart_item'),

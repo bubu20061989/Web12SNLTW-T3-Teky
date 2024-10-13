@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
 from .models import Cart, CartItem
-
+from django.contrib.auth.decorators import login_required
 
 def loadNhanSu(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
@@ -198,9 +198,45 @@ def createCart(request):
 #             return JsonResponse({'success': False, 'message': 'Invalid JSON data'})
 #     return render(request, 'checkout.html')
 
-def loadCheckout(request):
-    return render(request, 'checkout.html')
+# def loadCheckout(request):
+#     return render(request, 'checkout.html')
 
+@login_required
+def checkout(request):
+    # Assume `cart` is stored in session or passed as context (e.g. via POST)
+    cart = request.session.get('cart', {})
+
+    if not cart:
+        return redirect('cart')  # Redirect if the cart is empty
+
+    # Create a new Cart
+    cart = cart.objects.create(user=request.user)
+
+    total_price = 0
+
+    for product_id, item_data in cart.items():
+        product = Product.objects.get(id=product_id)
+        quantity = item_data.get('quantity', 1)
+        price = product.price * quantity
+
+        # Create an CartItem for each product in the cart
+        CartItem.objects.create(cart=cart, product=product, quantity=quantity, price=price)
+
+        total_price += price
+
+    # Update total price of the Cart
+    cart.total_price = total_price
+    cart.save()
+
+    # Clear the cart after successful checkout
+    del request.session['cart']
+
+    return redirect('Cart_success', cart_id=cart.id)
+
+@login_required
+def Cart_history(request):
+    Carts = Cart.objects.filter(user=request.user)
+    return render(request, 'checkout.html', {'carts': Carts})
 # @login_required
 # def add_to_cart(request, product_id):
 #     product = get_object_or_404(Product, id=product_id)
