@@ -132,6 +132,10 @@ def loadLogout(request):
         logout(request)
         return redirect('login')
     return render(request, 'error.html')
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Cart, CartItem, Product, CustomUser  # Adjust imports based on your app structure
 
 @csrf_exempt
 def createCart(request):
@@ -150,11 +154,20 @@ def createCart(request):
             # Clear existing cart items (optional, depending on how you want to handle it)
             user_cart.cartitem_set.all().delete()
 
+            # Initialize total cart price
+            total_cart_price = 0
+
             # Loop through cartData and save items to the Cart
             for item in cartData:
                 product_id = item['id']
                 quantity = item['quantity']
                 price = item['price']
+
+                # Calculate the total price for this item
+                item_total = float(price) * int(quantity)
+
+                # Add to the total cart price
+                total_cart_price += item_total
 
                 # Fetch the Product instance using the provided product_id
                 try:
@@ -162,13 +175,17 @@ def createCart(request):
                 except Product.DoesNotExist:
                     return JsonResponse({'success': False, 'message': f'Product with ID {product_id} does not exist'})
 
-                # Create and save each CartItem with the Product instance
+                # Create and save each CartItem with the correct field names
                 CartItem.objects.create(
-                    cart_id=user_cart,
-                    product_id=product,  # Pass the Product instance here
+                    cart_id=user_cart,  # Use 'cart_id' as per your model
+                    product_id=product,  # Use 'product_id' as per your model
                     quantity=quantity,
-                    price=price
+                    price=price,
                 )
+
+            # Update the total price of the cart
+            user_cart.total_price = total_cart_price
+            user_cart.save()
 
             return JsonResponse({'success': True, 'message': 'Cart processed successfully'})
 
@@ -178,7 +195,6 @@ def createCart(request):
             return JsonResponse({'success': False, 'message': f'An error occurred: {str(e)}'})
 
     return render(request, 'checkout.html')
-
 
 # @csrf_exempt
 # def createCart(request):
@@ -202,35 +218,10 @@ def createCart(request):
 
 @login_required
 def checkout(request):
-    # Assume `cart` is stored in session or passed as context (e.g. via POST)
-    cart = request.session.get('cart', {})
-
-    if not cart:
-        return redirect('cart')  # Redirect if the cart is empty
-
-    # Create a new Cart
-    cart = cart.objects.create(user=request.user)
-
-    total_price = 0
-
-    for product_id, item_data in cart.items():
-        product = Product.objects.get(id=product_id)
-        quantity = item_data.get('quantity', 1)
-        price = product.price * quantity
-
-        # Create an CartItem for each product in the cart
-        CartItem.objects.create(cart=cart, product=product, quantity=quantity, price=price)
-
-        total_price += price
-
-    # Update total price of the Cart
-    cart.total_price = total_price
-    cart.save()
-
-    # Clear the cart after successful checkout
-    del request.session['cart']
-
-    return redirect('Cart_success', cart_id=cart.id)
+    cart = Cart.objects.all()
+    print(cart)
+    return render(request, 'checkout.html')
+    
 
 @login_required
 def Cart_history(request):
