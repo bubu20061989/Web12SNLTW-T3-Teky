@@ -37,10 +37,15 @@ class ProductAdmin(admin.ModelAdmin):
 # Register Cart
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('cart_id', 'user_id', 'status', 'created_at')  # Customize fields to display
-    search_fields = ('cart_id', 'user_id__username')  # Allows searching by cart_id or username
-    list_filter = ('status', 'created_at')  # Filters for status and creation date
-    ordering = ('-created_at',)  # Orders by the most recent carts
+    list_display = ('cart_id', 'get_username', 'status', 'created_at')  # Tùy chỉnh các trường hiển thị
+    search_fields = ('cart_id', 'user_id__username')  
+    list_filter = ('status', 'created_at')  
+    ordering = ('-created_at',)  
+
+    def get_username(self, obj):
+        return obj.user_id.username  # Trả về tên người dùng
+    get_username.short_description = 'Username'  # Đặt tiêu đề cho cột
+
 
 # Register CartItem
 @admin.register(CartItem)

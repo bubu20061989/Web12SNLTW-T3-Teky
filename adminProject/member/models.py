@@ -82,15 +82,16 @@ class Cart(models.Model):
         ('daThanhToan', 'Đã thanh toán'),
     ]
 
-    cart_id = models.CharField(max_length=20, unique=True, primary_key=True)  # Đặt cart_id làm khóa chính
-    user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    cart_id = models.AutoField(primary_key=True)  # Sử dụng AutoField để tự động tăng
+    user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)  # Trường này chứa ID người dùng
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
     def __str__(self):
-        return f"Cart {self.cart_id} for {self.user_id.username}"
+        return f"Cart {self.cart_id} for {self.user_id.username}"  # Truy cập username từ user_id
+
 
     class Meta:
         # Bỏ qua khóa chính mặc định

@@ -138,7 +138,6 @@ def createCart(request):
     if request.method == 'POST':
         try:
             # Parse the JSON data from the request body
-            print(request.user)
             data = json.loads(request.body)
             cartData = data.get('cartData', None)
 
