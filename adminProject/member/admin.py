@@ -36,10 +36,10 @@ class WarehouseAdmin(admin.ModelAdmin):
 # Đăng ký Product
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('product_id', 'type', 'value', 'amount', 'status', 'warehouse', 'warehouse_stock')
-    search_fields = ('product_id', 'type')
-    list_filter = ('status', 'type', 'warehouse')
-    ordering = ('type', 'warehouse')
+    list_display = ('product_id', 'type', 'value', 'amount', 'status', 'warehouse','employee_id')
+    search_fields = ('product_id', 'type', 'value')
+    list_filter = ('status', 'type')   
+    ordering = ('type', 'warehouse','employee_id')
 
 # Đăng ký Cart
 @admin.register(Cart)

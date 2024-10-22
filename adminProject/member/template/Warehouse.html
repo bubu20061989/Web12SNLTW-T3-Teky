@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Warehouse</title>
+    <link rel="stylesheet" href="{% static 'css/Warehouse.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Warehouse</h1>
+        <div class="form-container" >
+            <form method="post" id="main-form">
+                {% csrf_token %}
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.warehouse_id.id_for_label }}">Warehouse ID</label>
+                        {{ form.warehouse_id }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.name.id_for_label }}">Name</label>
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.location.id_for_label }}">Location</label>
+                        {{ form.location }} 
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.capacity.id_for_label }}">Capacity</label>
+                        {{ form.capacity }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.current_stock.id_for_label }}">Current_stock</label>
+                        {{ form.current_stock }}
+                    </div>
+                </div>
+                <button type="submit">Save</button>
+                <button type="button" id="update-button">Update</button>
+                <button type="button" id="delete-button">Delete</button>
+            </form>
+        </div>
+
+        <div class="grid-container">
+            <h2>Warehouse List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Warehouse ID</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Capacity</th>
+                        <th>Current Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Warehouse in Warehouse %}
+                    <tr>
+                        <td>{{ Warehouse.warehouse_id }}</td>
+                        <td>{{ Warehouse.name }}</td>
+                        <td>{{ Warehouse.location }}</td>
+                        <td>{{ Warehouse.capacity }}</td>
+                        <td>{{ Warehouse.current_stock }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12">No Warehouses found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'js/warehouse.js' %}"></script>
+</body>
+</html>

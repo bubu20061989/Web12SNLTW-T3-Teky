@@ -1,5 +1,5 @@
 from django import forms
-from .models import Employee,Product
+from .models import Employee,Product, Warehouse
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -52,13 +52,39 @@ class EmployeeForm(forms.ModelForm):
     
 
 class ProductForm(forms.ModelForm):
+    # Add a ModelChoiceField for the warehouse, and make sure it's not empty
+    warehouse = forms.ModelChoiceField(
+        queryset=Warehouse.objects.all(),
+        empty_label="Chọn kho",  
+        widget=forms.Select(attrs={'class': 'form-input'}) 
+    )
+    employee_id = forms.ModelChoiceField(
+        queryset=Employee.objects.all(),
+        empty_label="Chọn nhân viên",
+        widget=forms.Select(attrs={'class': 'form-input'})
+    )
+
     class Meta:
         model = Product
-        fields = ['product_id', 'value', 'type', 'amount', 'status']  # Include all fields from the model
+        fields = ['product_id', 'value', 'type', 'amount', 'status', 'warehouse', 'employee_id']  # Include warehouse
         widgets = {
             'product_id': forms.TextInput(attrs={'class': 'form-input'}),
-            'value': forms.NumberInput(attrs={'step': '1','class': 'form-input'}),
-            'type': forms.Select(choices=Product.TYPE_CHOICES),
+            'value': forms.NumberInput(attrs={'step': '1', 'class': 'form-input'}),
+            'type': forms.Select(choices=Product.TYPE_CHOICES, attrs={'class': 'form-input'}),
             'amount': forms.NumberInput(attrs={'class': 'form-input'}),
-            'status': forms.Select(choices=Product.STATUS_CHOICES),
+            'status': forms.Select(choices=Product.STATUS_CHOICES, attrs={'class': 'form-input'}),
+            # The 'warehouse' field already has a class added in its own definition above
+        }
+
+
+class WarehouseForm(forms.ModelForm):
+    class Meta:
+        model = Warehouse
+        fields = ['warehouse_id', 'name', 'location', 'capacity', 'current_stock']  # Include all fields from the model
+        widgets = {
+            'warehouse_id': forms.TextInput(attrs={'class': 'form-input'}),
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
+            'location': forms.TextInput(attrs={'class': 'form-input'}),
+            'capacity': forms.NumberInput(attrs={'class': 'form-input'}),
+            'current_stock': forms.NumberInput(attrs={'class': 'form-input'}),
         }

@@ -40,6 +40,28 @@
                         {{ form.status }}
                     </div>
                 </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Warehouse</label>
+                        {{ form.warehouse }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Status</label>
+                        {{ form.status }}
+                    </div>
+                </div>
+
+
+                
+                <!-- <div class="form-row-group"></div>
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Warehouse</label>
+                        {{ form.warehouse }}
+                    </div>
+                </div> -->
+
                 <button type="submit">Save</button>
                 <button type="button" id="update-button">Update</button>
                 <button type="button" id="delete-button">Delete</button>
@@ -56,6 +78,8 @@
                         <th>Type</th>
                         <th>Amount</th>
                         <th>Status</th>
+                        <th>Warehouse</th>
+                        <th>Employee ID</th>
 
                     </tr>
                 </thead>
@@ -67,6 +91,8 @@
                         <td>{{ Product.type }}</td>
                         <td>{{ Product.amount }}</td>
                         <td>{{ Product.status }}</td>
+                        <td>{{ Product.warehouse }}</td>
+                        <td>{{ Product.employee_id }}</td>
 
                     </tr>
                     {% empty %}

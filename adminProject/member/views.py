@@ -1,6 +1,6 @@
-from .forms import EmployeeForm, ProductForm
+from .forms import EmployeeForm, ProductForm, WarehouseForm
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Employee, Product , CustomUser
+from .models import Employee, Product , CustomUser, Warehouse
 from django.contrib.auth import authenticate, login , logout 
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
@@ -78,6 +78,41 @@ def deleteProduct(request, product_id):
         product.delete()  # Xóa nhân viên
         return redirect('product')  # Redirect về trang danh sách nhân viên  
     return render(request, 'product.html', {'Products': product})
+
+def loadWarehouse(request):
+    if request.user.role != 'admin' and request.user.role != 'manager':
+        return render(request, 'error.html')
+    if request.method == 'POST':
+        form = WarehouseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('warehouse')
+    else: 
+        form = WarehouseForm()
+    # Query the database for all employees
+    warehouse = Warehouse.objects.all()
+
+    return render(request, 'Warehouse.html', {'form': form, 'Warehouse': warehouse})
+
+def updateWarehouse(request, warehouse_id):
+    print('Update Warehouse')
+    warehouse = get_object_or_404(Warehouse, warehouse_id=warehouse_id)  # Kiểm tra nhân viên có tồn tại không
+    if request.method == 'POST':
+        form = WarehouseForm(request.POST, instance=warehouse)
+        if form.is_valid():
+            form.save()
+            return redirect('warehouse')  # Redirect về trang danh sách nhân viên
+    else:
+        form = WarehouseForm(instance=warehouse)   
+    return render(request, 'Warehouses.html', {'form': form})
+
+def deleteWarehouse(request, warehouse_id):
+    print('Delete Warehouse')
+    warehouse = get_object_or_404(Warehouse, warehouse_id=warehouse_id)  # Kiểm tra nhân viên có tồn tại không
+    if request.method == 'POST':
+        warehouse.delete()  # Xóa nhân viên
+        return redirect('warehouse')  # Redirect về trang danh sách nhân viên  
+    return render(request, 'Warehouse.html', {'Warehouse': warehouse})
 
 def loadShopProduct(request):
     print('Load Shop Product')

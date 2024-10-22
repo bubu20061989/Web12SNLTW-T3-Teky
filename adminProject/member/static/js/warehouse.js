@@ -20,13 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(selectedMainId);
 
         // Populate form fields with selected product data
-        document.getElementById('id_product_id').value = cells[0].textContent || '';
-        document.getElementById('id_value').value = cells[1].textContent || '';
-        document.getElementById('id_type').value = cells[2].textContent || '';
-        document.getElementById('id_amount').value = cells[3].textContent || '';
-        document.getElementById('id_status').value = cells[4].textContent || '';
-        document.getElementById('id_warehouse').value = cells[5].textContent || '';
-        document.getElementById('id_employee_id').value = cells[6].textContent || '';
+        document.getElementById('id_warehouse_id').value = cells[0].textContent || '';
+        document.getElementById('id_name').value = cells[1].textContent || '';
+        document.getElementById('id_location').value = cells[2].textContent || '';
+        document.getElementById('id_capacity').value = cells[3].textContent || '';
+        document.getElementById('id_current_stock').value = cells[4].textContent || '';
     }
 
     // Add click event listener to each row
@@ -44,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Update button clicked')
         updateButton.addEventListener('click', function() {
             if (selectedMainId) {
-                mainForm.action = `/product/update/${selectedMainId}/`; // URL để cập nhật
+                mainForm.action = `/warehouse/update/${selectedMainId}/`; // URL để cập nhật
                 mainForm.submit();
             } else {
-                alert('Please select a product to update.');
+                alert('Please select a warehouse to update.');
             }
         });
     }
@@ -56,10 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (deleteButton) {
         deleteButton.addEventListener('click', function() {
             if (selectedMainId) {
-                mainForm.action = `/product/delete/${selectedMainId}/`; // URL để xóa
+                mainForm.action = `warehouse/delete/${selectedMainId}/`; // URL để xóa
                 mainForm.submit();
             } else {
-                alert('Please select a product to delete.');
+                alert('Please select a warehouse to delete.');
             }
         });
     }
