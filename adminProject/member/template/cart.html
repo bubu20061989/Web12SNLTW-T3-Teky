@@ -10,26 +10,27 @@
 </head>
 <body>
     <div class="container">
-        <h1>Create Cart</h1>
+        <h1>Cart List</h1>
         <div class="form-container" >
             <form method="post" id="main-form">
                 {% csrf_token %}
                 <div class="form-row-group">
                     <div class="form-row">
-                        <label for="{{ form.user_id.id_for_label }}">user_id</label>
+                        <label for="{{ form.status.id_for_label }}">User ID</label>
                         {{ form.user_id }}
-                    </div>
-                </div>
-                <div class="form-row-group">
-                    <div class="form-row">
-                        <label for="{{ form.status.id_for_label }}">Status</label>
-                        {{ form.status }}
                     </div>
                     <div class="form-row">
                         <label for="{{ form.total_price.id_for_label }}">Total price</label>
                         {{ form.total_price }}
                     </div>
                 </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.user_id.id_for_label }}">Status</label>
+                        {{ form.status }}
+                    </div>
+                </div>
+                
           
                 <!-- <div class="form-row-group"></div>
                     <div class="form-row">

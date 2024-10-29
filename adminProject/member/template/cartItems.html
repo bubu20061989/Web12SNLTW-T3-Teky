@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Items List</title>
+    <link rel="stylesheet" href="{% static 'css/cartItems.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Cart Items Lists</h1>
+        <div class="form-container">
+            <form method="post" id="main-form">
+                {% csrf_token %}
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.cart_id.id_for_label }}">Cart ID</label>
+                        {{ form.cart_id }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.product_id.id_for_label }}">Product ID</label>
+                        {{ form.product_id }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.quantity.id_for_label }}">Quantity</label>
+                        {{ form.quantity }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.price.id_for_label }}">Price</label>
+                        {{ form.price }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.warehouse.id_for_label }}">Warehouse</label>
+                        {{ form.warehouse }}
+                    </div>
+                </div>
+                <button type="button" id="update-button">Update</button>
+                <button type="button" id="delete-button">Delete</button>
+            </form>
+        </div>
+
+        <div class="grid-container">
+            <h2>Cart Items Information</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cart ID</th>
+                        <th>Product ID</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Warehouse</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Product in CartItem %}
+                    <tr>
+                        <td>{{ CartItem.cart_id }}</td>
+                        <td>{{ CartItem.product_id }}</td>
+                        <td>{{ CartItem.quantity }}</td>
+                        <td>{{ CartItem.price }}</td>
+                        <td>{{ CartItem.warehouse }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12">No Cart Item Found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'js/cartItems.js' %}"></script>
+</body>
+
+</html>

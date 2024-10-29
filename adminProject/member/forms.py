@@ -1,6 +1,5 @@
 from django import forms
-from .models import Employee,Product, Warehouse, Cart
-
+from .models import Employee,Product, Warehouse, CartItem, Cart
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -99,6 +98,18 @@ class CartForm(forms.ModelForm):
             'user_id': forms.TextInput(attrs={'class': 'form-input'}),
             'status': forms.Select(choices=Cart.TRANG_THAI, attrs={'class': 'form-input'}),
             'total_price': forms.NumberInput(attrs={'class': 'form-input'}),
+        }
+
+class cartItemsForm(forms.ModelForm):
+    class Meta:
+        model = CartItem
+        fields = ['cart_id', 'product_id', 'quantity', 'price', 'warehouse']  # Include all fields from the model
+        widgets = {
+            'cart_id': forms.TextInput(attrs={'class': 'form-input'}),
+            'product_id': forms.TextInput(attrs={'class': 'form-input'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-input'}),
+            'price': forms.NumberInput(attrs={'class': 'form-input'}),
+            'warehouse': forms.TextInput(attrs={'class': 'form-input'}),
         }
 
 

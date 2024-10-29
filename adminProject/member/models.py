@@ -109,7 +109,6 @@ class Cart(models.Model):
         # Bỏ qua khóa chính mặc định
         db_table = 'cart'
 
-
 class CartItem(models.Model):
     cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)

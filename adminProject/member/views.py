@@ -1,13 +1,12 @@
-from .forms import EmployeeForm, ProductForm, WarehouseForm, CartForm
+from .forms import EmployeeForm, ProductForm, WarehouseForm, CartForm, cartItemsForm
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Employee, Product , CustomUser, Warehouse
+from .models import Employee, Product , CustomUser, Warehouse, CartItem, Cart
 from django.contrib.auth import authenticate, login , logout 
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
-from .models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
 
 def loadNhanSu(request):
@@ -278,10 +277,41 @@ def loadCart(request):
     cart = CartItem.objects.all()
     return render(request, 'cart.html', {'form': form, 'cart': cart})
 
+def loadCartItems(request):
+    if request.user.role != 'admin' and request.user.role != 'manager':
+        return render(request, 'error.html')
+    print(request.method)
+    if request.method == 'POST':
+        form = cartItemsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cartItems')
+    else: 
+        form = cartItemsForm()
+    # Query the database for all employees
+    cart = CartItem.objects.all()
+    return render(request, 'cartItems.html', {'form': form, 'cartItems': cart})
 
 
+def updateCartItems(request, cart_id):
+    print('Update CartItems')
+    cart = get_object_or_404(CartItem, cart_id=cart_id)  # Kiểm tra nhân viên có tồn tại không
+    if request.method == 'POST':
+        form = cartItemsForm(request.POST, instance=cart)
+        if form.is_valid():
+            form.save()
+            return redirect('cartItems')  # Redirect về trang danh sách nhân viên
+    else:
+        form = cartItemsForm(instance=cart)    
+    return render(request, 'cartItems.html', {'form': form})
 
-
+def deleteCartItems(request, cart_id):
+    print('Delete CartItems')
+    cart = get_object_or_404(CartItem, cart_id=cart_id)  # Kiểm tra nhân viên có tồn tại không
+    if request.method == 'POST':
+        cart.delete()  # Xóa nhân viên
+        return redirect('warehouse')  # Redirect về trang danh sách nhân viên  
+    return render(request, 'cartItems.html', {'cartItems': cart})
 
 
 # @login_required
