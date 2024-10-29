@@ -1,4 +1,4 @@
-from .forms import EmployeeForm, ProductForm, WarehouseForm
+from .forms import EmployeeForm, ProductForm, WarehouseForm, CartForm
 from django.shortcuts import render, redirect,get_object_or_404
 from .models import Employee, Product , CustomUser, Warehouse
 from django.contrib.auth import authenticate, login , logout 
@@ -43,6 +43,8 @@ def deleteNhanSu(request, employee_id):
         employee.delete()  # Xóa nhân viên
         return redirect('nhanSu')  # Redirect về trang danh sách nhân viên   
     return render(request, 'nhanSu.html', {'employee': employee})
+
+
 
 def loadProduct(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
@@ -262,6 +264,26 @@ def checkout(request):
 def Cart_history(request):
     Carts = Cart.objects.filter(user=request.user)
     return render(request, 'checkout.html', {'carts': Carts})
+
+
+def loadCart(request):
+    if request.method == 'POST':
+        form = CartForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cartAdmin')
+    else:
+        form = CartForm()
+    print(form)
+    cart = CartItem.objects.all()
+    return render(request, 'cart.html', {'form': form, 'cart': cart})
+
+
+
+
+
+
+
 # @login_required
 # def add_to_cart(request, product_id):
 #     product = get_object_or_404(Product, id=product_id)

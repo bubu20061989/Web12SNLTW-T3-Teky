@@ -11,6 +11,7 @@ urlpatterns = [
     path('dangKi', views.loadDangKi, name='dangKi'),
     path('logout', views.loadLogout, name='logout'),
     path('createCart', views.createCart, name='cart'),
+    path('cart', views.createCart, name='cart'),
     path('warehouse', views.loadWarehouse, name='warehouse'),
     path('checkout', checkout, name='checkout'),
     path('Cart-history/', Cart_history, name='cart_history'),
@@ -21,5 +22,7 @@ urlpatterns = [
     path('product/delete/<str:product_id>/', views.deleteProduct, name='delete_Product'),
     path('warehouse/update/<str:warehouse_id>/', views.updateWarehouse, name='update_Warehouse'),
     path('warehouse/delete/<str:warehouse_id>/', views.deleteWarehouse, name='delete_Warehouse'),
+    path('cartAdmin', views.loadCart, name='cartAdmin'),
+
     #/update-employee/TE7091
 ]

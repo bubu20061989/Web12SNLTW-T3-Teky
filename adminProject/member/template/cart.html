@@ -1,20 +1,81 @@
-<!-- cart_view.html -->
-<!-- <h2>Your Cart</h2>
-{% if items %}
-<ul>
-    {% for item in items %}
-    <li>{{ item.product.name }} ({{ item.quantity }})</li>
-    <form action="{% url 'update_cart_item' item.id %}" method="post">
-        {% csrf_token %}
-        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-        <button type="submit">Update Quantity</button>
-    </form>
-    <form action="{% url 'remove_from_cart' item.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Remove</button>
-    </form>
-    {% endfor %}
-</ul>
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %} -->
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Cart</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Cart</h1>
+        <div class="form-container" >
+            <form method="post" id="main-form">
+                {% csrf_token %}
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.user_id.id_for_label }}">user_id</label>
+                        {{ form.user_id }}
+                    </div>
+                </div>
+                <div class="form-row-group">
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Status</label>
+                        {{ form.status }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.total_price.id_for_label }}">Total price</label>
+                        {{ form.total_price }}
+                    </div>
+                </div>
+          
+                <!-- <div class="form-row-group"></div>
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Warehouse</label>
+                        {{ form.warehouse }}
+                    </div>
+                </div> -->
+            </form>
+        </div>
+
+        <button class="btn-detail" onclick="searchCartItem()">Details</button>
+        <button class="btn-delete" onclick="deleteCartItem()">Delete</button>
+
+        <div class="grid-container">
+            <h2>Cart List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cart ID</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Total price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Cart in Carts %}
+                    <tr>
+                        <td>{{ Cart.cart_id }}</td>
+                        <td>{{ Cart.created_at }}</td>
+                        <td>{{ Cart.updated_at }}</td>
+                        <td>{{ Cart.amount }}</td>
+                        <td>{{ Cart.status }}</td>
+                        <td>{{ Cart.total_price }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12">There aren't any cart.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>
