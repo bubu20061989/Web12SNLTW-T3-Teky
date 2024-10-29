@@ -3,12 +3,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4f9ff;
+    color: #333;
 }
 
 /* Header */
 header {
-    background-color: #24292e;
+    background-color: #1a73e8;
     padding: 20px 50px;
 }
 
@@ -33,12 +34,17 @@ header .container {
 }
 
 .search-bar .btn-search {
-    background-color: #ff6600;
+    background-color: #0b61d4;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.search-bar .btn-search:hover {
+    background-color: #0953b1;
 }
 
 /* Header Buttons */
@@ -49,7 +55,7 @@ header .container {
 
 .header-buttons a,
 .header-buttons button {
-    background-color: #ff6600;
+    background-color: #0b61d4;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -57,20 +63,27 @@ header .container {
     border-radius: 4px;
     margin-left: 10px;
     text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 .header-buttons .btn-cart {
-    background-color: #007bff;
+    background-color: #4caf50;
 }
 
-/* Dropdown */
+.header-buttons a:hover,
+.header-buttons button:hover {
+    background-color: #0953b1;
+}
+
+/* Dropdown Container */
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
+/* Dropdown Button */
 .dropbtn {
-    background-color: #ff6600;
+    background-color: #0b61d4;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -79,16 +92,23 @@ header .container {
     border-radius: 4px;
     display: flex;
     align-items: center;
+    transition: background-color 0.3s;
 }
 
+.dropbtn i {
+    margin-left: 8px;
+}
+
+/* Dropdown Content */
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: white;
     min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     z-index: 1;
     border-radius: 4px;
+    overflow: hidden;
 }
 
 .dropdown-content a,
@@ -97,17 +117,25 @@ header .container {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    border-bottom: 1px solid #eee;
     width: 100%;
     text-align: left;
+    transition: background-color 0.3s;
 }
 
+.dropdown-content a:hover,
+.btn-logout:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Show Dropdown Content on Hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
+/* Button Hover Effect */
 .dropdown:hover .dropbtn {
-    background-color: #e65c00;
+    background-color: #0953b1;
 }
 
 /* Product List */
@@ -136,16 +164,17 @@ header .container {
 
 .product h2 {
     margin: 10px 0;
+    color: #0b61d4;
 }
 
 .product p {
-    color: #ff6600;
+    color: #0b61d4;
     font-size: 18px;
 }
 
 /* Product Button */
 .product button {
-    background-color: #ff6600;
+    background-color: #0b61d4;
     color: white;
     padding: 15px;
     border: none;
@@ -159,7 +188,7 @@ header .container {
 }
 
 .product button:hover {
-    background-color: #ff8533;
+    background-color: #0953b1;
 }
 
 /* Modal Cart */
@@ -226,7 +255,7 @@ header .container {
 }
 
 .quantity-controls button {
-    background-color: #ff6600;
+    background-color: #0b61d4;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -258,5 +287,14 @@ header .container {
 
     .product {
         width: 80%;
+    }
+
+    .dropbtn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .dropdown-content {
+        min-width: 140px;
     }
 }
