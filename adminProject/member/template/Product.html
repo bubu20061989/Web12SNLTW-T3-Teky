@@ -39,8 +39,6 @@
                         <label for="{{ form.status.id_for_label }}">Status</label>
                         {{ form.status }}
                     </div>
-                </div>
-                <div class="form-row-group">
                     <div class="form-row">
                         <label for="{{ form.status.id_for_label }}">Warehouse</label>
                         {{ form.warehouse }}
@@ -50,6 +48,10 @@
                     <div class="form-row">
                         <label for="{{ form.status.id_for_label }}">Employee</label>
                         {{ form.employee_id }}
+                    </div>
+                    <div class="form-row">
+                        <label for="{{ form.status.id_for_label }}">Image</label>
+                        {{ form.image }}
                     </div>
                 </div>
             
@@ -78,7 +80,7 @@
                         <th>Status</th>
                         <th>Warehouse</th>
                         <th>Employee ID</th>
-
+                        <th>Image</th>                       
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +93,7 @@
                         <td>{{ Product.status }}</td>
                         <td>{{ Product.warehouse }}</td>
                         <td>{{ Product.employee_id }}</td>
-
+                        <td>{{ Product.Image }}</td>
                     </tr>
                     {% empty %}
                     <tr>

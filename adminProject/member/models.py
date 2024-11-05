@@ -67,6 +67,7 @@ class Product(models.Model):
         ('aoKhoac', 'Áo Khoác'),
         ('aoPolo', 'Áo Polo'),
     ]
+    image = models.ImageField(upload_to='images', blank=True, null=True)
     product_id = models.CharField(max_length=100, unique=True)
     value = models.DecimalField(max_digits=10, decimal_places=2) # số lượng sản phẩm trong kho
     type = models.CharField(
@@ -95,7 +96,7 @@ class Cart(models.Model):
     ]
 
     cart_id = models.AutoField(primary_key=True)  # Sử dụng AutoField để tự động tăng
-    user_id = models.OneToOneField(CustomUser, on_delete=models.CASCADE)  # Trường này chứa ID người dùng
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Trường này chứa ID người dùng
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')

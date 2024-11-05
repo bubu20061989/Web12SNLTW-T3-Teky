@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('id_status').value = cells[4].textContent || '';
         document.getElementById('id_warehouse').value = cells[5].textContent || '';
         document.getElementById('id_employee_id').value = cells[6].textContent || '';
+        document.getElementById('id_image').value = cells[7].textContent || '';
     }
 
     // Add click event listener to each row

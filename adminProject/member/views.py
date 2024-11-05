@@ -184,42 +184,38 @@ def createCart(request):
             if cartData is None:
                 return JsonResponse({'success': False, 'message': 'No cart data provided'})
 
-            # Retrieve or create a Cart for the user
-            user_cart, created = Cart.objects.get_or_create(user_id=request.user)
+            # Check for an active cart or create a new one
+            user_cart, created = Cart.objects.get_or_create(user_id=request.user, status='active')
 
-            # Clear existing cart items (optional, depending on how you want to handle it)
-            user_cart.cartitem_set.all().delete()
+            # Optionally clear existing items, if desired
+            # user_cart.cartitem_set.all().delete()
 
-            # Initialize total cart price
             total_cart_price = 0
-
-            # Loop through cartData and save items to the Cart
             for item in cartData:
                 product_id = item['id']
                 quantity = item['quantity']
                 price = item['price']
 
-                # Calculate the total price for this item
                 item_total = float(price) * int(quantity)
-
-                # Add to the total cart price
                 total_cart_price += item_total
 
-                # Fetch the Product instance using the provided product_id
+                # Fetch the Product instance
                 try:
-                    product = Product.objects.get(product_id=product_id)  # Adjust if your field name is different
+                    product = Product.objects.get(product_id=product_id)
+                    warehouse = product.warehouse
                 except Product.DoesNotExist:
                     return JsonResponse({'success': False, 'message': f'Product with ID {product_id} does not exist'})
 
-                # Create and save each CartItem with the correct field names
+                # Add item to the cart
                 CartItem.objects.create(
-                    cart_id=user_cart,  # Use 'cart_id' as per your model
-                    product_id=product,  # Use 'product_id' as per your model
+                    cart_id=user_cart,
+                    product_id=product,
                     quantity=quantity,
                     price=price,
+                    warehouse=warehouse,
                 )
 
-            # Update the total price of the cart
+            # Update the total price
             user_cart.total_price = total_cart_price
             user_cart.save()
 
@@ -231,6 +227,7 @@ def createCart(request):
             return JsonResponse({'success': False, 'message': f'An error occurred: {str(e)}'})
 
     return render(request, 'checkout.html')
+
 
 # @csrf_exempt
 # def createCart(request):
@@ -254,15 +251,16 @@ def createCart(request):
 
 @login_required
 def checkout(request):
+    print('checkout')
     cart = Cart.objects.all()
     print(cart)
     return render(request, 'checkout.html')
     
 
-@login_required
-def Cart_history(request):
-    Carts = Cart.objects.filter(user=request.user)
-    return render(request, 'checkout.html', {'carts': Carts})
+# @login_required
+# def Cart_history(request):
+#     Carts = Cart.objects.filter(user=request.user)
+#     return render(request, 'checkout.html', {'carts': Carts})
 
 
 def loadCart(request):

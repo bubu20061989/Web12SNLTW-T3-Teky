@@ -42,7 +42,7 @@
     <section class="products">
         {% for product in Products %}
         <div class="product">
-            <img src="{{ product.image_url }}" alt="{{ product.product_id }}">
+            <img src="media/{{ product.image }}" alt="{{ product.product_id }}">
             <h2>{{ product.product_id }}</h2>
             <p>{{ product.value }} VND</p>
             <button class="btn-add" onclick="addToCart('{{ product.product_id }}', '{{ product.value }}')">Thêm vào giỏ</button>

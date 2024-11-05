@@ -63,16 +63,16 @@ class ProductForm(forms.ModelForm):
         empty_label="Chọn nhân viên",
         widget=forms.Select(attrs={'class': 'form-input'})
     )
-
     class Meta:
         model = Product
-        fields = ['product_id', 'value', 'type', 'amount', 'status', 'warehouse', 'employee_id']  # Include warehouse
+        fields = ['product_id', 'value', 'type', 'amount', 'status', 'warehouse', 'employee_id', 'image']  # Include warehouse
         widgets = {
             'product_id': forms.TextInput(attrs={'class': 'form-input'}),
             'value': forms.NumberInput(attrs={'step': '1', 'class': 'form-input'}),
             'type': forms.Select(choices=Product.TYPE_CHOICES, attrs={'class': 'form-input'}),
             'amount': forms.NumberInput(attrs={'class': 'form-input'}),
             'status': forms.Select(choices=Product.STATUS_CHOICES, attrs={'class': 'form-input'}),
+            'image': forms.FileInput(attrs={'class': 'form-input'}),
             # The 'warehouse' field already has a class added in its own definition above
         }
 

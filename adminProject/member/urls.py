@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from member import views
-from .views import checkout, Cart_history
+from .views import checkout
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('nhanSu', views.loadNhanSu, name='nhanSu'),
@@ -14,7 +16,7 @@ urlpatterns = [
     path('cart', views.createCart, name='cart'),
     path('warehouse', views.loadWarehouse, name='warehouse'),
     path('checkout', checkout, name='checkout'),
-    path('Cart-history/', Cart_history, name='cart_history'),
+    # path('Cart-history/', Cart_history, name='cart_history'),
     path('cartItems/', views.loadCartItems, name='cartItems'),
     path('error', views.loadError, name='error'),
     path('employee/update/<str:employee_id>/', views.updateNhanSu, name='update_employee'),
@@ -27,3 +29,5 @@ urlpatterns = [
 
     #/update-employee/TE7091
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

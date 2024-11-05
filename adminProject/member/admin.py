@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Employee, Warehouse, Product, Cart, CartItem
+from django.utils.html import format_html
 
 # Đăng ký CustomUser
 @admin.register(CustomUser)
@@ -36,18 +37,23 @@ class WarehouseAdmin(admin.ModelAdmin):
 # Đăng ký Product
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('product_id', 'type', 'value', 'amount', 'status', 'warehouse','employee_id')
+    list_display = ('product_id', 'type', 'value', 'amount', 'status', 'warehouse', 'employee_id', 'thumbnail')
     search_fields = ('product_id', 'type', 'value')
     list_filter = ('status', 'type')   
-    ordering = ('type', 'warehouse','employee_id')
+    ordering = ('type', 'warehouse', 'employee_id')
+    def thumbnail(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="50" height="50" />', obj.image.url)
+        return "No Image"
+    thumbnail.short_description = 'img'
 
 # Đăng ký Cart
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     list_display = ('cart_id', 'get_username', 'status', 'created_at', 'total_price')  # Tùy chỉnh các trường hiển thị
     search_fields = ('cart_id', 'user_id__username')  
-    list_filter = ('status', 'created_at')  
-    ordering = ('-created_at',)  
+    list_filter = ('status', 'created_at', 'total_price')  
+    ordering = ()  
 
     def get_username(self, obj):
         return obj.user_id.username  # Trả về tên người dùng
@@ -60,3 +66,7 @@ class CartItemAdmin(admin.ModelAdmin):
     search_fields = ('cart_id__cart_id', 'product_id__product_id')  # Cho phép tìm kiếm bằng ID giỏ hàng hoặc sản phẩm
     list_filter = ('cart_id', 'product_id', 'warehouse')  # Lọc theo giỏ hàng, sản phẩm và kho
     ordering = ('cart_id', 'product_id', 'warehouse')
+
+
+
+    
