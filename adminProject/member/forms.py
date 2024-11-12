@@ -92,10 +92,9 @@ class WarehouseForm(forms.ModelForm):
 class CartForm(forms.ModelForm):
     class Meta:
         model = Cart
-        fields = ['cart_id', 'user_id','status','total_price']   
+        fields = ['cart_id','status','total_price']   
         widgets = {
             'cart_id': forms.TextInput(attrs={'class': 'form-input'}),
-            'user_id': forms.TextInput(attrs={'class': 'form-input'}),
             'status': forms.Select(choices=Cart.TRANG_THAI, attrs={'class': 'form-input'}),
             'total_price': forms.NumberInput(attrs={'class': 'form-input'}),
         }

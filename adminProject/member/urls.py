@@ -17,7 +17,6 @@ urlpatterns = [
     path('warehouse', views.loadWarehouse, name='warehouse'),
     path('checkout', checkout, name='checkout'),
     # path('Cart-history/', Cart_history, name='cart_history'),
-    path('cartItems/', views.loadCartItems, name='cartItems'),
     path('error', views.loadError, name='error'),
     path('employee/update/<str:employee_id>/', views.updateNhanSu, name='update_employee'),
     path('employee/delete/<str:employee_id>/', views.deleteNhanSu, name='delete_employee'),
@@ -26,6 +25,8 @@ urlpatterns = [
     path('warehouse/update/<str:warehouse_id>/', views.updateWarehouse, name='update_Warehouse'),
     path('warehouse/delete/<str:warehouse_id>/', views.deleteWarehouse, name='delete_Warehouse'),
     path('cartAdmin/', views.loadCart, name='cartAdmin'),
+    path('cartAdmin/delete/<str:cart_id>/', views.deleteCart, name='delete_Cart'),
+    path('cartItems/<str:cart_id>', views.loadCartItems, name='cartItems'),
 
     #/update-employee/TE7091
 ]

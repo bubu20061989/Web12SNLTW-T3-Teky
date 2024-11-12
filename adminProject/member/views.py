@@ -272,10 +272,19 @@ def loadCart(request):
     else:
         form = CartForm()
     print(form)
-    cart = CartItem.objects.all()
-    return render(request, 'cart.html', {'form': form, 'cart': cart})
+    carts = Cart.objects.all()
+    return render(request, 'cart.html', {'form': form, 'carts': carts})
 
-def loadCartItems(request):
+
+def deleteCart(request, cart_id):
+    print('Delete CartItems')
+    cart = get_object_or_404(CartItem, cart_id=cart_id) 
+    if request.method == 'POST':
+        cart.delete()  
+        return redirect('cartAdmin')  
+    return render(request, 'cartAdmin.html', {'cartAdmin': cart})
+
+def loadCartItems(request, cart_id):
     if request.user.role != 'admin' and request.user.role != 'manager':
         return render(request, 'error.html')
     print(request.method)
@@ -287,7 +296,7 @@ def loadCartItems(request):
     else: 
         form = cartItemsForm()
     # Query the database for all employees
-    cart = CartItem.objects.all()
+    cart = get_object_or_404(CartItem, cart_id=cart_id) 
     return render(request, 'cartItems.html', {'form': form, 'cartItems': cart})
 
 
@@ -346,3 +355,4 @@ def deleteCartItems(request, cart_id):
 #     cart_item.delete()
     
 #     return redirect('cart_view')
+

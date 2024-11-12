@@ -95,21 +95,18 @@ class Cart(models.Model):
         ('daGiaoHang', 'Đã giao hàng'),
     ]
 
-    cart_id = models.AutoField(primary_key=True)  # Sử dụng AutoField để tự động tăng
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Trường này chứa ID người dùng
+    cart_id = models.AutoField(primary_key=True)  # Auto-incrementing primary key
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Foreign key to CustomUser model
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=TRANG_THAI, default='chuaThanhToan')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
 
     def __str__(self):
-        return f"Cart {self.cart_id} for {self.user_id.username}"  # Truy cập username từ user_id
-
+        return f"Cart {self.cart_id} for {self.user_id.username}"  # Access username from the related user
 
     class Meta:
-        # Bỏ qua khóa chính mặc định
-        db_table = 'cart'
-
+        db_table = 'cart'  # Custom table name
 class CartItem(models.Model):
     cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
