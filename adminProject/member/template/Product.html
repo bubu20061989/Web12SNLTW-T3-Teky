@@ -12,7 +12,7 @@
     <div class="container">
         <h1>Create Product</h1>
         <div class="form-container" >
-            <form method="post" id="main-form">
+            <form method="post" id="main-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-row-group">
                     <div class="form-row">
@@ -93,7 +93,7 @@
                         <td>{{ Product.status }}</td>
                         <td>{{ Product.warehouse }}</td>
                         <td>{{ Product.employee_id }}</td>
-                        <td>{{ Product.Image }}</td>
+                        <td>{{ Product.image }}</td>
                     </tr>
                     {% empty %}
                     <tr>
