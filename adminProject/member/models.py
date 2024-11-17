@@ -67,7 +67,6 @@ class Product(models.Model):
         ('aoKhoac', 'Áo Khoác'),
         ('aoPolo', 'Áo Polo'),
     ]
-    image = models.ImageField(upload_to='images', blank=True, null=True)
     product_id = models.CharField(max_length=100, unique=True)
     value = models.DecimalField(max_digits=10, decimal_places=2) # số lượng sản phẩm trong kho
     type = models.CharField(
@@ -83,10 +82,10 @@ class Product(models.Model):
     )
     warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)  # Kho lưu trữ sản phẩm
     employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images', blank=True, null=True)
     def __str__(self):
         return f'{self.product_id} - {self.type}'
 
-    
 class Cart(models.Model):
     TRANG_THAI = [
         ('chuaThanhToan', 'Chưa thanh toán'),

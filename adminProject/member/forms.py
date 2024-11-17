@@ -76,7 +76,6 @@ class ProductForm(forms.ModelForm):
             # The 'warehouse' field already has a class added in its own definition above
         }
 
-
 class WarehouseForm(forms.ModelForm):
     class Meta:
         model = Warehouse
