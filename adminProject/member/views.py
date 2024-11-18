@@ -49,7 +49,7 @@ def loadProduct(request):
     if request.user.role != 'admin' and request.user.role != 'manager':
         return render(request, 'error.html')
     if request.method == 'POST':
-        form = ProductForm(request.POST)
+        form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('product')
