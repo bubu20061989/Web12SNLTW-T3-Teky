@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Select the new row
-        row.classList.add('selected');
+row.classList.add('selected');
         
         const cells = row.getElementsByTagName('td');
         selectedMainId = cells[0].textContent.trim(); // Get Cart ID from the first column
