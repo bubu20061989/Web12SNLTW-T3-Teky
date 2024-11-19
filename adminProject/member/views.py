@@ -186,9 +186,8 @@ def createCart(request):
 
             # Check for an active cart or create a new one
             user_cart, created = Cart.objects.get_or_create(user_id=request.user, status='active')
-
             # Optionally clear existing items, if desired
-            # user_cart.cartitem_set.all().delete()
+            user_cart.cartitem_set.all().delete()
 
             total_cart_price = 0
             for item in cartData:

@@ -58,13 +58,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for Cart in Carts %}
+                    {% for cart in carts %}
                     <tr>
-                        <td>{{ Cart.cart_id }}</td>
-                        <td>{{ Cart.created_at }}</td>
-                        <td>{{ Cart.updated_at }}</td>
-                        <td>{{ Cart.status }}</td>
-                        <td>{{ Cart.total_price }}</td>
+                        <td>{{ cart.cart_id }}</td>
+                        <td>{{ cart.created_at }}</td>
+                        <td>{{ cart.updated_at }}</td>
+                        <td>{{ cart.status }}</td>
+                        <td>{{ cart.total_price }}</td>
                     </tr>
                     {% empty %}
                     <tr>

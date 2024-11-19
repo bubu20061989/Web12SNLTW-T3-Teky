@@ -18,9 +18,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.username} (Employee ID: {self.employee_id}, Role: {self.role})"
 
-
-    
-
 class Employee(models.Model):
     STATUS_CHOICES = [
         ('Active', 'Active'),
@@ -67,7 +64,7 @@ class Product(models.Model):
         ('aoKhoac', 'Áo Khoác'),
         ('aoPolo', 'Áo Polo'),
     ]
-    product_id = models.CharField(max_length=100, unique=True)
+    product_id = models.CharField(max_length=100)
     value = models.DecimalField(max_digits=10, decimal_places=2) # số lượng sản phẩm trong kho
     type = models.CharField(
         max_length=20,
@@ -119,4 +116,9 @@ class CartItem(models.Model):
     def __str__(self):
         return f"{self.quantity} of {self.product_id} from Warehouse {self.warehouse.name} in Cart"
 
-
+# class  Checkout(models.Model):
+#     cart_id = models.ForeignKey(Cart, on_delete=models.CASCADE)
+#     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField()
+#     price = models.DecimalField()
+#     total_price = models.ForeignKey(Cart, on_delete=models.CASCADE)

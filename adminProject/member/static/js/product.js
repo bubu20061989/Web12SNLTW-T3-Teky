@@ -26,19 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('id_amount').value = cells[3]?.textContent || '';
         document.getElementById('id_status').value = cells[4]?.textContent || '';
         document.getElementById('id_warehouse').value = cells[5]?.textContent || '';
-        document.getElementById('id_employee_id').value = cells[6]?.textContent || '';
+        document.getElementById('id_employee_id').value = cells[6]?.textContent || ''     
+        document.getElementById('id_image').value = cells[7]?.textContent || '';
         
         // Do not attempt to set the value of 'image' as it can only be set to an empty string programmatically
         console.log('Form values populated (excluding image field):');
-        console.log({
-            product_id: document.getElementById('id_product_id').value,
-            value: document.getElementById('id_value').value,
-            type: document.getElementById('id_type').value,
-            amount: document.getElementById('id_amount').value,
-            status: document.getElementById('id_status').value,
-            warehouse: document.getElementById('id_warehouse').value,
-            employee_id: document.getElementById('id_employee_id').value,
-        });
+        // console.log({
+        //     product_id: document.getElementById('id_product_id').value,
+        //     value: document.getElementById('id_value').value,
+        //     type: document.getElementById('id_type').value,
+        //     amount: document.getElementById('id_amount').value,
+        //     status: document.getElementById('id_status').value,
+        //     warehouse: document.getElementById('id_warehouse').value,
+        //     employee_id: document.getElementById('id_employee_id').value,
+        // });
     }
     
     // Add click event listener to each row
