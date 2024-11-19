@@ -96,9 +96,9 @@ function checkout() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("Proceeding to checkout. Total amount: " + document.getElementById('total-price').textContent);
+            alert("Proceeding to success. Total amount: " + document.getElementById('total-price').textContent);
             hideCart(); // Hide cart after checkout
-            window.location.href = "/checkout"; // Redirect to cart or success page
+            window.location.href = "/success"; // Redirect to cart or success page
         } else {
             alert("Error during checkout: " + data.message);
         }

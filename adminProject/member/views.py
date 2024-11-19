@@ -145,6 +145,9 @@ def loadLogin(request):
 def loadError(request):
     return render(request, 'error.html')
 
+def loadSuccess(request):
+    return render(request, 'success.html')
+
 def loadDangKi(request):
     if request.method == 'POST':
         username = request.POST['name']
@@ -184,10 +187,8 @@ def createCart(request):
             if cartData is None:
                 return JsonResponse({'success': False, 'message': 'No cart data provided'})
 
-            # Check for an active cart or create a new one
-            user_cart, created = Cart.objects.get_or_create(user_id=request.user, status='active')
-            # Optionally clear existing items, if desired
-            user_cart.cartitem_set.all().delete()
+            # Always create a new cart
+            user_cart = Cart.objects.create(user_id=request.user, status='active', total_price=0)
 
             total_cart_price = 0
             for item in cartData:
@@ -205,7 +206,7 @@ def createCart(request):
                 except Product.DoesNotExist:
                     return JsonResponse({'success': False, 'message': f'Product with ID {product_id} does not exist'})
 
-                # Add item to the cart
+                # Add item to the new cart
                 CartItem.objects.create(
                     cart_id=user_cart,
                     product_id=product,
@@ -218,15 +219,14 @@ def createCart(request):
             user_cart.total_price = total_cart_price
             user_cart.save()
 
-            return JsonResponse({'success': True, 'message': 'Cart processed successfully'})
+            return JsonResponse({'success': True, 'message': 'Cart created successfully'})
 
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'message': 'Invalid JSON data'})
         except Exception as e:
             return JsonResponse({'success': False, 'message': f'An error occurred: {str(e)}'})
 
-    return render(request, 'checkout.html')
-
+    return render(request, 'success.html')
 
 # @csrf_exempt
 # def createCart(request):
