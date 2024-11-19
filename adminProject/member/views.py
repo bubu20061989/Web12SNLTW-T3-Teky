@@ -253,7 +253,7 @@ def checkout(request):
     print('checkout')
     cart = Cart.objects.all()
     print(cart)
-    return render(request, 'checkout.html')
+    return render(request, 'success.html')
     
 
 # @login_required

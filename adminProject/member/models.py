@@ -64,7 +64,7 @@ class Product(models.Model):
         ('aoKhoac', 'Áo Khoác'),
         ('aoPolo', 'Áo Polo'),
     ]
-    product_id = models.CharField(max_length=100)
+    product_id = models.CharField(max_length=100, unique=True)
     value = models.DecimalField(max_digits=10, decimal_places=2) # số lượng sản phẩm trong kho
     type = models.CharField(
         max_length=20,
