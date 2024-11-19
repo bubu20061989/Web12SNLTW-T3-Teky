@@ -110,4 +110,13 @@ class cartItemsForm(forms.ModelForm):
             'warehouse': forms.TextInput(attrs={'class': 'form-input'}),
         }
 
-
+# class checkoutForm(forms.ModelForm):
+#     class Meta:
+#         model = Checkout
+#         fields = ['cart_id', 'product_id', 'price', 'total_price']
+#         widgets = {
+#             'cart_id': forms.TextInput(attrs={'class': 'form-input'}),
+#             'product_id': forms.TextInput(attrs={'class': 'form-input'}),
+#             'price': forms.NumberInput(attrs={'class': 'form-input'}),
+#             'total_price': forms.NumberInput(attrs={'class': 'form-input'}),
+#         }
