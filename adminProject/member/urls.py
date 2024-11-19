@@ -15,7 +15,7 @@ urlpatterns = [
     path('createCart', views.createCart, name='cart'),
     path('cart', views.createCart, name='cart'),
     path('warehouse', views.loadWarehouse, name='warehouse'),
-    path('checkout', checkout, name='checkout'),
+    # path('checkout', checkout, name='checkout'),
     # path('Cart-history/', Cart_history, name='cart_history'),
     path('error', views.loadError, name='error'),
     path('employee/update/<str:employee_id>/', views.updateNhanSu, name='update_employee'),
@@ -27,6 +27,7 @@ urlpatterns = [
     path('cartAdmin/', views.loadCart, name='cartAdmin'),
     path('cartAdmin/delete/<str:cart_id>/', views.deleteCart, name='delete_Cart'),
     path('cartItems/<str:cart_id>', views.loadCartItems, name='cartItems'),
+    path('success/', views.loadSuccess, name='success'),
 
     #/update-employee/TE7091
 ]
